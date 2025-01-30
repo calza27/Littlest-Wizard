@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://cav80y2kyudpj"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_uiqgj"]
+[ext_resource type="PackedScene" uid="uid://bq58hhvoivofv" path="res://scenes/player/weapon.tscn" id="2_03gea"]
+[ext_resource type="PackedScene" uid="uid://bdaemx53nxxqk" path="res://scenes/player/player_animator.tscn" id="2_dy3ji"]
+[ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="4_t8wa6"]
+[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="5_hask7"]
+[ext_resource type="PackedScene" uid="uid://x8133w1ee3io" path="res://scenes/components/graphics_component.tscn" id="6_k3x3o"]
+[ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="6_mow3a"]
+[ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="8_5y1eh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_25igo"]
+radius = 53.1507
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4qben"]
+radius = 53.0094
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 31
+motion_mode = 1
+script = ExtResource("1_uiqgj")
+
+[node name="Weapon" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("2_03gea")]
+position = Vector2(0, -76)
+collision_layer = 0
+collision_mask = 0
+status_component = NodePath("../StatusComponent")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_t8wa6")]
+unique_name_in_owner = true
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
+unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component", "movement_component", "status_component") instance=ExtResource("6_mow3a")]
+collision_layer = 1
+health_component = NodePath("../HealthComponent")
+movement_component = NodePath("../MovementComponent")
+status_component = NodePath("../StatusComponent")
+
+[node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
+light_mask = 2
+position = Vector2(0, -64)
+shape = SubResource("CircleShape2D_25igo")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -64)
+shape = SubResource("CircleShape2D_4qben")
+
+[node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
+
+[node name="PlayerAnimator" parent="GraphicsComponent" instance=ExtResource("2_dy3ji")]
+unique_name_in_owner = true
+position = Vector2(0, 0)
+
+[node name="StatusComponent" parent="." instance=ExtResource("8_5y1eh")]
+unique_name_in_owner = true
+
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]

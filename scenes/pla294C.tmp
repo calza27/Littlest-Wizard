@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://cav80y2kyudpj"]
+
+[ext_resource type="PackedScene" uid="uid://bdaemx53nxxqk" path="res://scenes/player_animator.tscn" id="2_dy3ji"]
+
+[sub_resource type="GDScript" id="GDScript_65rtx"]
+script/source = "extends CharacterBody2D
+
+@onready var tile_map = %TileMap
+@onready var sprite = %PlayerSprite
+var speed = 600
+
+func _physics_process(delta: float) -> void:
+	var direction = Vector2(0,0)
+	if Input.is_action_pressed(\"up\"):
+		direction.y += Vector2.UP
+	elif Input.is_action_pressed(\"down\"):
+		direction.y += Vector2.DOWN
+	if Input.is_action_pressed(\"left\"):
+		direction.x += Vector2.LEFT
+	elif Input.is_action_pressed(\"right\"):
+		direction.x += Vector2.RIGHT
+	move(direction)
+
+func move(direction: Vector2) -> void:
+	velocity = direction * speed
+	move_and_slide()
+	if direction.x == 0 && direction.y == 0:
+		%PlayerAnimator.play_idle_animation()
+	else:
+		%PlayerAnimator.play_walk_animation()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_25igo"]
+radius = 53.1507
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_65rtx")
+
+[node name="PlayerAnimator" parent="." instance=ExtResource("2_dy3ji")]
+unique_name_in_owner = true
+position = Vector2(1091, 671)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerAnimator"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -26)
+shape = SubResource("CircleShape2D_25igo")

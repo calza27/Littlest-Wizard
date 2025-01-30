@@ -1,0 +1,254 @@
+[gd_scene load_steps=26 format=3 uid="uid://qybhe87u5fgd"]
+
+[ext_resource type="Script" path="res://scripts/mobs/goblin.gd" id="1_4hbfk"]
+[ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_jae6w"]
+[ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_y61aq"]
+[ext_resource type="Texture2D" uid="uid://bf26dgce5fg1u" path="res://assets/mobs/Goblin.png" id="3_8vflv"]
+[ext_resource type="PackedScene" uid="uid://cielpm0w42vv8" path="res://scenes/components/partical_attachment_component.tscn" id="6_4o20a"]
+[ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="7_uoojp"]
+[ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="8_0ef0b"]
+[ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_k2bm3"]
+[ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="10_bgr8n"]
+[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_5v7xm"]
+[ext_resource type="PackedScene" uid="uid://dynxdmeqqbuxl" path="res://scenes/components/ai/ai_melee.tscn" id="12_ksf2p"]
+[ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_32o1l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
+atlas = ExtResource("3_8vflv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbaag"]
+atlas = ExtResource("3_8vflv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akbb5"]
+atlas = ExtResource("3_8vflv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xlij"]
+atlas = ExtResource("3_8vflv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8vs7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juw5r")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbaag")
+}],
+"loop": false,
+"name": &"dodge",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akbb5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xlij")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26cwb"]
+radius = 21.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mjqkj"]
+radius = 33.0
+height = 90.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
+radius = 1580.41
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ykfk"]
+radius = 41.0488
+
+[sub_resource type="Animation" id="Animation_5e7mw"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-36, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_klrya"]
+resource_name = "walk_bounce"
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-36, -0.25, 0, 0.25, 0, -44, -0.25, 0, 0.25, 0, -36, -0.25, 0, 0.25, 0, -44, -0.25, 0, 0.25, 0, -36, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y800p"]
+_data = {
+"RESET": SubResource("Animation_5e7mw"),
+"walk_bounce": SubResource("Animation_klrya")
+}
+
+[node name="Goblin" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 31
+motion_mode = 1
+script = ExtResource("1_4hbfk")
+max_health = 200.0
+dodge_chance = 0.2
+move_speed = 500.0
+attack_power = 30.0
+attack_damage_type = 3
+attack_cooldown = 2.0
+ui_label = "goblin"
+
+[node name="GroundShadow" parent="." instance=ExtResource("2_y61aq")]
+
+[node name="MobGraphicsComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_2D", "animation_player")]
+unique_name_in_owner = true
+position = Vector2(0, -36)
+script = ExtResource("2_jae6w")
+sprite_2D = NodePath("Goblin")
+animation_player = NodePath("../AnimationPlayer")
+
+[node name="Goblin" type="AnimatedSprite2D" parent="MobGraphicsComponent"]
+position = Vector2(-3.57628e-07, -7.99999)
+scale = Vector2(2.92188, 2.92188)
+sprite_frames = SubResource("SpriteFrames_k8vs7")
+animation = &"attack"
+
+[node name="partical_area_body" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+position = Vector2(0, 3)
+scale = Vector2(0.342246, 0.342246)
+collision_shape = NodePath("BodyShape")
+
+[node name="BodyShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/partical_area_body"]
+position = Vector2(3.57627e-07, 14.2343)
+shape = SubResource("CircleShape2D_26cwb")
+debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
+
+[node name="partical_area_head" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+position = Vector2(0, 3)
+scale = Vector2(0.342246, 0.342246)
+collision_shape = NodePath("HeadShape")
+
+[node name="HeadShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/partical_area_head"]
+position = Vector2(3.57627e-07, -28.7656)
+shape = SubResource("CircleShape2D_26cwb")
+debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
+
+[node name="HitboxComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("7_uoojp")]
+unique_name_in_owner = true
+collision_layer = 2
+status_component = NodePath("../../StatusComponent")
+
+[node name="HitboxShape" type="CollisionShape2D" parent="MobGraphicsComponent/HitboxComponent"]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_mjqkj")
+debug_color = Color(0.312927, 0.626208, 1.54018e-06, 0.42)
+
+[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("8_0ef0b")]
+unique_name_in_owner = true
+position = Vector2(0, 36)
+collision_layer = 0
+status_component = NodePath("../../StatusComponent")
+
+[node name="AttackRange" type="CollisionShape2D" parent="MobGraphicsComponent/AttackComponent"]
+position = Vector2(0, -25)
+shape = SubResource("CircleShape2D_bsnlh")
+debug_color = Color(0.955093, 0, 0.545015, 0.42)
+
+[node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_k2bm3")]
+unique_name_in_owner = true
+position = Vector2(0, 36)
+collision_layer = 0
+collision_mask = 1
+
+[node name="VisionArea" type="CollisionShape2D" parent="MobGraphicsComponent/VisionComponent"]
+shape = SubResource("CircleShape2D_wem7o")
+debug_color = Color(0.663129, 0.316447, 1, 0.42)
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("10_bgr8n")]
+unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("11_5v7xm")]
+unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
+
+[node name="AiMelee" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("12_ksf2p")]
+unique_name_in_owner = true
+movement_component = NodePath("../MovementComponent")
+vision_component = NodePath("../MobGraphicsComponent/VisionComponent")
+hitbox_component = NodePath("../MobGraphicsComponent/HitboxComponent")
+health_component = NodePath("../HealthComponent")
+attack_component = NodePath("../MobGraphicsComponent/AttackComponent")
+status_component = NodePath("../StatusComponent")
+mob_graphics_component = NodePath("../MobGraphicsComponent")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -25)
+shape = SubResource("CircleShape2D_4ykfk")
+
+[node name="StatusComponent" parent="." instance=ExtResource("13_32o1l")]
+unique_name_in_owner = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../MobGraphicsComponent")
+libraries = {
+"": SubResource("AnimationLibrary_y800p")
+}
+
+[connection signal="attack_dodged" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
+[connection signal="attacked" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attacked"]
+[connection signal="area_entered" from="MobGraphicsComponent/VisionComponent" to="MobGraphicsComponent/VisionComponent" method="_on_area_entered"]
+[connection signal="player_is_spotted" from="MobGraphicsComponent/VisionComponent" to="." method="_on_vision_component_player_is_spotted"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]

@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://cav80y2kyudpj"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_uiqgj"]
+[ext_resource type="PackedScene" uid="uid://bq58hhvoivofv" path="res://scenes/player/weapon.tscn" id="2_03gea"]
+[ext_resource type="PackedScene" uid="uid://bdaemx53nxxqk" path="res://scenes/player/player_animator.tscn" id="2_dy3ji"]
+[ext_resource type="PackedScene" uid="uid://vymgdx6smso4" path="res://scenes/components/mana_component.tscn" id="2_n6yu5"]
+[ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="4_t8wa6"]
+[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="5_hask7"]
+[ext_resource type="PackedScene" uid="uid://x8133w1ee3io" path="res://scenes/components/graphics_component.tscn" id="6_k3x3o"]
+[ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="6_mow3a"]
+[ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="8_5y1eh"]
+[ext_resource type="PackedScene" uid="uid://3ei8mcfuqur2" path="res://scenes/components/inventory_component.tscn" id="9_taq1l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r8l86"]
+radius = 33.0
+height = 98.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s28he"]
+radius = 30.0
+height = 94.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 31
+motion_mode = 1
+script = ExtResource("1_uiqgj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ManaComponent" parent="." instance=ExtResource("2_n6yu5")]
+unique_name_in_owner = true
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("4_t8wa6")]
+unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
+unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
+
+[node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
+unique_name_in_owner = true
+
+[node name="PlayerAnimator" parent="GraphicsComponent" instance=ExtResource("2_dy3ji")]
+unique_name_in_owner = true
+position = Vector2(0, 0)
+scale = Vector2(2, 2)
+
+[node name="StatusComponent" parent="." instance=ExtResource("8_5y1eh")]
+unique_name_in_owner = true
+
+[node name="InventoryComponent" parent="." instance=ExtResource("9_taq1l")]
+unique_name_in_owner = true
+
+[node name="Weapon" parent="." node_paths=PackedStringArray("status_component", "inventory_component") instance=ExtResource("2_03gea")]
+unique_name_in_owner = true
+position = Vector2(0, -60)
+collision_layer = 0
+collision_mask = 0
+status_component = NodePath("../StatusComponent")
+inventory_component = NodePath("../InventoryComponent")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("6_mow3a")]
+unique_name_in_owner = true
+collision_layer = 1
+status_component = NodePath("../StatusComponent")
+
+[node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
+light_mask = 2
+position = Vector2(0, -40)
+shape = SubResource("CapsuleShape2D_r8l86")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -40)
+shape = SubResource("CapsuleShape2D_s28he")
+
+[connection signal="mana_changed" from="ManaComponent" to="." method="_on_mana_component_mana_changed"]
+[connection signal="max_mana_changed" from="ManaComponent" to="." method="_on_mana_component_max_mana_changed"]
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="max_health_changed" from="HealthComponent" to="." method="_on_health_component_max_health_changed"]
+[connection signal="attack_dodged" from="HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
+[connection signal="attacked" from="HitboxComponent" to="." method="_on_hitbox_component_attacked"]
+[connection signal="hit_by_attack" from="HitboxComponent" to="." method="_on_hitbox_component_hit_by_attack"]

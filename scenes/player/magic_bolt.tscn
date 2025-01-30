@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdqdtdsfyonv2"]
+
+[ext_resource type="Script" path="res://scripts/player/magic_bolt.gd" id="1_ewvi6"]
+[ext_resource type="Texture2D" uid="uid://cicy7j3tucj6t" path="res://assets/cantrip_w_particle.png" id="2_3givs"]
+[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="3_uhbwx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nrn8t"]
+radius = 19.0
+height = 68.0
+
+[node name="MagicBolt" type="Area2D" node_paths=PackedStringArray("movement_component")]
+top_level = true
+collision_layer = 4
+collision_mask = 26
+script = ExtResource("1_ewvi6")
+movement_component = NodePath("MovementComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("2_3givs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_nrn8t")
+
+[node name="MovementComponent" parent="." instance=ExtResource("3_uhbwx")]
+unique_name_in_owner = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="traversed_max_distance" from="MovementComponent" to="." method="_on_movement_component_traversed_max_distance"]

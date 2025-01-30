@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqupuq3h2bma6"]
+
+[ext_resource type="PackedScene" uid="uid://cav80y2kyudpj" path="res://scenes/player/player.tscn" id="1_ttkmc"]
+[ext_resource type="PackedScene" uid="uid://cr0ewxm88421o" path="res://scenes/ui/ui.tscn" id="1_x20b3"]
+[ext_resource type="PackedScene" uid="uid://dhm705sofa3do" path="res://scenes/mobs/slime.tscn" id="2_f0p8i"]
+[ext_resource type="PackedScene" uid="uid://h3c0u66gkf0v" path="res://scenes/terrain/tree.tscn" id="3_e24a4"]
+[ext_resource type="PackedScene" uid="uid://qybhe87u5fgd" path="res://scenes/mobs/goblin.tscn" id="4_0q57s"]
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -405.0
+offset_top = -407.0
+offset_right = 2690.0
+offset_bottom = 1912.0
+
+[node name="Player" parent="." instance=ExtResource("1_ttkmc")]
+position = Vector2(1153, 648)
+
+[node name="Slime" parent="." instance=ExtResource("2_f0p8i")]
+position = Vector2(60, 96)
+
+[node name="Slime2" parent="." instance=ExtResource("2_f0p8i")]
+position = Vector2(51, 1275)
+
+[node name="Slime3" parent="." instance=ExtResource("2_f0p8i")]
+position = Vector2(2238, 90)
+
+[node name="Tree" parent="." instance=ExtResource("3_e24a4")]
+position = Vector2(1448, 666)
+
+[node name="Tree2" parent="." instance=ExtResource("3_e24a4")]
+position = Vector2(1174, 1013)
+
+[node name="Tree3" parent="." instance=ExtResource("3_e24a4")]
+position = Vector2(1342, 899)
+
+[node name="Tree4" parent="." instance=ExtResource("3_e24a4")]
+position = Vector2(1549, 1013)
+
+[node name="Goblin" parent="." instance=ExtResource("4_0q57s")]
+position = Vector2(3862, 2483)
+
+[node name="UiCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="UiCanvasLayer" instance=ExtResource("1_x20b3")]

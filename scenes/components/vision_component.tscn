@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuqapv6ldsag1"]
+
+[ext_resource type="Script" path="res://scripts/components/vision_component.gd" id="1_04pjm"]
+
+[node name="VisionComponent" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_04pjm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

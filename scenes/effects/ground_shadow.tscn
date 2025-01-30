@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsj0g047v3wbk"]
+
+[ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://assets/ground_shadow.png" id="1_6wka8"]
+
+[node name="GroundShadow" type="Sprite2D"]
+modulate = Color(0, 0, 0, 0.819608)
+texture = ExtResource("1_6wka8")

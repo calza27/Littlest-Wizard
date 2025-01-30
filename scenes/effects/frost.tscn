@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://4bakngcyl81o"]
+
+[ext_resource type="Texture2D" uid="uid://bmfwa6as1ypqb" path="res://assets/effects/frost.png" id="1_lxhl6"]
+[ext_resource type="Script" path="res://scripts/effects/particle_effect.gd" id="2_fne7c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ft8xu"]
+atlas = ExtResource("1_lxhl6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nso4y"]
+atlas = ExtResource("1_lxhl6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxpv5"]
+atlas = ExtResource("1_lxhl6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kup46"]
+atlas = ExtResource("1_lxhl6")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qbeiv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ft8xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nso4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxpv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kup46")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Frost" type="AnimatedSprite2D"]
+self_modulate = Color(1, 1, 1, 0.784314)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_qbeiv")
+frame_progress = 0.157682
+script = ExtResource("2_fne7c")

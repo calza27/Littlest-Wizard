@@ -1,0 +1,2 @@
+class_name CollisionComponent
+extends Area2D

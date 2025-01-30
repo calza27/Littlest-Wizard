@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq58hhvoivofv"]
+
+[ext_resource type="Script" path="res://scripts/player/weapon.gd" id="1_abtpd"]
+[ext_resource type="Script" path="res://scripts/player/weapon_pivot.gd" id="1_j8ah6"]
+[ext_resource type="Texture2D" uid="uid://q7espxmr03n8" path="res://assets/staff.png" id="2_o1cun"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vi0fj"]
+radius = 87.0057
+
+[node name="Weapon" type="Area2D"]
+script = ExtResource("1_abtpd")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vi0fj")
+debug_color = Color(0.957884, 0, 0.530161, 0.42)
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+script = ExtResource("1_j8ah6")
+
+[node name="Sprite" type="Sprite2D" parent="WeaponPivot"]
+unique_name_in_owner = true
+position = Vector2(88, 0)
+texture = ExtResource("2_o1cun")
+
+[node name="ProjectilePoint" type="Marker2D" parent="WeaponPivot/Sprite"]
+unique_name_in_owner = true
+position = Vector2(-1, -22)

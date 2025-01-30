@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://k28dti2aqnwk"]
+
+[ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="1_hketa"]
+
+[node name="MobGraphicsComponent" type="Node2D"]
+script = ExtResource("1_hketa")
