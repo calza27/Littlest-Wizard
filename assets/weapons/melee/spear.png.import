@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk2fk5svnxul2"
-path="res://.godot/imported/Pseudopod.png-e07d37710bfb9efdf18a511f5ca54324.ctex"
+uid="uid://dtjlfdds5ntrd"
+path="res://.godot/imported/spear.png-df8c9d8048dc2755c21135720d3b28a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/weapons/melee/Pseudopod.png"
-dest_files=["res://.godot/imported/Pseudopod.png-e07d37710bfb9efdf18a511f5ca54324.ctex"]
+source_file="res://assets/weapons/melee/spear.png"
+dest_files=["res://.godot/imported/spear.png-df8c9d8048dc2755c21135720d3b28a5.ctex"]
 
 [params]
 

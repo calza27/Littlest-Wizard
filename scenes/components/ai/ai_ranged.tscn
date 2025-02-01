@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://px68bhsre8e5"]
+
+[ext_resource type="Script" path="res://scripts/components/ai/ai_ranged.gd" id="1_e8ft3"]
+
+[node name="AiRanged" type="Node2D"]
+script = ExtResource("1_e8ft3")

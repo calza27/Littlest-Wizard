@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bknoech025x6a"]
+
+[ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_xvfjm"]
+[ext_resource type="Texture2D" uid="uid://b2upi77p6yvp8" path="res://assets/weapons/ranged/projectiles/arrow.png" id="2_jio2f"]
+[ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="2_xuoux"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0a05i"]
+size = Vector2(7, 3)
+
+[node name="Projectile" type="Area2D"]
+scale = Vector2(2, 2)
+collision_layer = 4
+collision_mask = 25
+script = ExtResource("1_xvfjm")
+
+[node name="MovementComponent" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_xuoux")
+speed = 1000.0
+max_distance = 1500.0
+weight = 1.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_jio2f")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(12.5, 0.5)
+shape = SubResource("RectangleShape2D_0a05i")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="traversed_max_distance" from="MovementComponent" to="." method="_on_movement_component_traversed_max_distance"]

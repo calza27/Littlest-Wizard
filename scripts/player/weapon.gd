@@ -18,7 +18,7 @@ func _ready() -> void:
 func shoot():
 	if self.ready_to_attack:
 		self.ready_to_attack = false
-		const MAGIC_BOLT = preload(Files.PROJECTILES["magic_bolt"])
+		const MAGIC_BOLT = preload(Files.PROJECTILES.magic_bolt)
 		var new_magic_bolt = MAGIC_BOLT.instantiate()
 		var magicBoltAttack = Attack.new(self.magic_bolt_damage, self.magic_bolt_damage_type, self.magic_bolt_knockback_force)
 		if self.inventory_component:

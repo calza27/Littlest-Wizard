@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dhm705sofa3do"]
+[gd_scene load_steps=36 format=3 uid="uid://dhm705sofa3do"]
 
 [ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_0d5gc"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_10khn"]
@@ -8,12 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="4_0005g"]
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="5_dagfm"]
 [ext_resource type="PackedScene" uid="uid://cielpm0w42vv8" path="res://scenes/components/partical_attachment_component.tscn" id="6_qqdsq"]
+[ext_resource type="PackedScene" uid="uid://dxynlqfncmbll" path="res://scenes/weapons/ranged/ranged_weapon.tscn" id="8_0o2n8"]
 [ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="8_1u48a"]
-[ext_resource type="PackedScene" uid="uid://dynxdmeqqbuxl" path="res://scenes/components/ai/ai_melee.tscn" id="8_nen22"]
 [ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_g5e1l"]
-[ext_resource type="PackedScene" uid="uid://dxgsii6laafcp" path="res://scenes/melee_weapon.tscn" id="9_ovxtm"]
-[ext_resource type="Texture2D" uid="uid://bk2fk5svnxul2" path="res://assets/weapons/melee/Pseudopod.png" id="10_xhwuq"]
+[ext_resource type="Resource" uid="uid://dctwcwlxffaru" path="res://scripts/weapons/slime_pseudopod.tres" id="9_uu4mx"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_51fbp"]
+[ext_resource type="PackedScene" uid="uid://px68bhsre8e5" path="res://scenes/components/ai/ai_ranged.tscn" id="13_p80st"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_suq1w"]
 atlas = ExtResource("3_qwkma")
@@ -124,7 +124,9 @@ radius = 33.0472
 radius = 47.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
-radius = 49.0102
+radius = 68.0074
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6kr3a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
 radius = 660.027
@@ -186,12 +188,13 @@ _data = {
 "walk_bounce": SubResource("Animation_klrya")
 }
 
-[node name="Slime" type="CharacterBody2D"]
+[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("ai_component")]
 collision_layer = 2
 collision_mask = 31
 motion_mode = 1
 script = ExtResource("1_0d5gc")
 ui_label = "slime"
+ai_component = NodePath("AiRanged")
 
 [node name="GroundShadow" parent="." instance=ExtResource("2_10khn")]
 
@@ -228,12 +231,12 @@ position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_4ykfk")
 debug_color = Color(0.312927, 0.626208, 1.54018e-06, 0.42)
 
-[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "weapon_component") instance=ExtResource("8_1u48a")]
+[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "ranged_weapon_component") instance=ExtResource("8_1u48a")]
 unique_name_in_owner = true
 position = Vector2(0, 36)
 collision_layer = 0
 status_component = NodePath("../../StatusComponent")
-weapon_component = NodePath("MeleeWeapon")
+ranged_weapon_component = NodePath("RangedWeapon")
 damage = 200.0
 damage_type = 1
 cooldown = 3.0
@@ -243,10 +246,10 @@ position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_bsnlh")
 debug_color = Color(0.955093, 0, 0.545015, 0.42)
 
-[node name="MeleeWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("9_ovxtm")]
-position = Vector2(0, -26)
-texture = ExtResource("10_xhwuq")
-mode = 1
+[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_0o2n8")]
+position = Vector2(0, -25)
+texture = SubResource("CompressedTexture2D_6kr3a")
+projectile_attributes = ExtResource("9_uu4mx")
 
 [node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_g5e1l")]
 unique_name_in_owner = true
@@ -255,6 +258,7 @@ collision_layer = 0
 collision_mask = 1
 
 [node name="VisionArea" type="CollisionShape2D" parent="MobGraphicsComponent/VisionComponent"]
+position = Vector2(-5, 0)
 shape = SubResource("CircleShape2D_wem7o")
 debug_color = Color(0.663129, 0.316447, 1, 0.42)
 
@@ -270,8 +274,7 @@ status_component = NodePath("../StatusComponent")
 speed = 300.0
 weight = 1.0
 
-[node name="AiMelee" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("8_nen22")]
-unique_name_in_owner = true
+[node name="AiRanged" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("13_p80st")]
 movement_component = NodePath("../MovementComponent")
 vision_component = NodePath("../MobGraphicsComponent/VisionComponent")
 hitbox_component = NodePath("../MobGraphicsComponent/HitboxComponent")

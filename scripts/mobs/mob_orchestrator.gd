@@ -2,13 +2,13 @@ class_name MobOrchestrator
 extends CharacterBody2D
 
 @export var ui_label: String
+@export var ai_component: AIComponent
 
 @onready var vision_component: VisionComponent = %VisionComponent
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var hitbox_component: HitboxComponent = %HitboxComponent
 @onready var attack_component: AttackComponent = %AttackComponent
-@onready var ai_melee_component: AiMelee = %AiMelee
 @onready var mob_graphics_component: MobGraphicsComponent = %MobGraphicsComponent
 @onready var status_component: StatusComponent = %StatusComponent
 
@@ -52,7 +52,7 @@ func _apply_attack(attack: Attack) -> void:
 				self.mob_graphics_component.attach_random(attack.status_effect.particle_effect)
 
 func _on_vision_component_player_is_spotted() -> void:
-	self.ai_melee_component.set_mode(Constants.AiMode.ENGAGED)
+	self.ai_component.set_mode(Constants.AiMode.ENGAGED)
 
 func _on_hitbox_component_attack_dodged(_attack: Attack) -> void:
 	if self.mob_graphics_component:

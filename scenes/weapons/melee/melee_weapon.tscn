@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dxgsii6laafcp"]
 
-[ext_resource type="Script" path="res://scripts/melee_weapon.gd" id="1_lvgin"]
-[ext_resource type="Texture2D" uid="uid://70i32qjl31n5" path="res://assets/weapons/melee/sword.png" id="2_yy3c6"]
+[ext_resource type="Script" path="res://scripts/weapons/melee_weapon.gd" id="1_esq8h"]
+[ext_resource type="Texture2D" uid="uid://70i32qjl31n5" path="res://assets/weapons/melee/sword.png" id="2_3mhk5"]
 
 [sub_resource type="Animation" id="Animation_73n82"]
 length = 0.001
@@ -14,7 +14,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [false]
 }
 tracks/1/type = "bezier"
@@ -31,7 +31,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PivotPoint:rotation")
+tracks/2/path = NodePath("PivotPoint/SwingPoint:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -53,7 +53,7 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PivotPoint/SwingPoint:position:y")
+tracks/4/path = NodePath("PivotPoint:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -84,21 +84,21 @@ tracks/0/path = NodePath("PivotPoint/SwingPoint/Sprite/HitboxArea/HitboxShape:di
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.65, 0.925),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"times": PackedFloat32Array(0, 0.65, 0.925),
+"transitions": PackedFloat32Array(1e+06, 1, 1),
+"update": 0,
+"values": [true, false, true]
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PivotPoint/SwingPoint:rotation")
+tracks/1/path = NodePath("PivotPoint/SwingPoint:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(1, 0, 0, 0),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, -1.4, 0, 0, 0, 0, 2.8, -0.25, 0, 0.25, 0, 0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -114,13 +114,13 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PivotPoint/SwingPoint:position:y")
+tracks/3/path = NodePath("PivotPoint/SwingPoint:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, -1.4, 0, 0, 0, 0, 2.8, -0.25, 0, 0.25, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -145,21 +145,21 @@ tracks/0/path = NodePath("PivotPoint/SwingPoint/Sprite/HitboxArea/HitboxShape:di
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.65, 0.925),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"times": PackedFloat32Array(0, 0.65, 0.925),
+"transitions": PackedFloat32Array(1e+06, 1, 1),
+"update": 0,
+"values": [true, false, true]
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PivotPoint/SwingPoint:rotation")
+tracks/1/path = NodePath("PivotPoint/SwingPoint:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(1, 0, 0, 0),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, 1.4, 0, 0, 0, 0, -2.8, -0.25, 0, 0.25, 0, 0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -175,13 +175,13 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PivotPoint/SwingPoint:position:y")
+tracks/3/path = NodePath("PivotPoint/SwingPoint:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 1.4, 0, 0, 0, 0, -2.8, -0.25, 0, 0.25, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -218,32 +218,32 @@ tracks/1/path = NodePath("PivotPoint/SwingPoint/Sprite/HitboxArea/HitboxShape:di
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.65, 0.925),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"times": PackedFloat32Array(0, 0.65, 0.925),
+"transitions": PackedFloat32Array(1e+06, 1, 1),
+"update": 0,
+"values": [true, false, true]
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PivotPoint/SwingPoint:position:x")
+tracks/2/path = NodePath("PivotPoint/SwingPoint:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15, -0.25, 0, 0.25, 0, 60, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PivotPoint/SwingPoint:position:y")
+tracks/3/path = NodePath("PivotPoint/SwingPoint:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0, 60, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.65, 0.925, 1.5)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m6h5g"]
@@ -254,13 +254,13 @@ _data = {
 "thrust": SubResource("Animation_85o3s")
 }
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_q7igk"]
-b = Vector2(21, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_165a2"]
+size = Vector2(20, 3)
 
 [node name="MeleeWeapon" type="Node2D"]
 visible = false
 z_index = 1
-script = ExtResource("1_lvgin")
+script = ExtResource("1_esq8h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -278,15 +278,15 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 position = Vector2(65, -1)
 scale = Vector2(2, 2)
-texture = ExtResource("2_yy3c6")
+texture = ExtResource("2_3mhk5")
 
 [node name="HitboxArea" type="Area2D" parent="PivotPoint/SwingPoint/Sprite"]
 collision_layer = 4
 
 [node name="HitboxShape" type="CollisionShape2D" parent="PivotPoint/SwingPoint/Sprite/HitboxArea"]
 unique_name_in_owner = true
-position = Vector2(-5, 0.5)
-shape = SubResource("SegmentShape2D_q7igk")
+position = Vector2(5, 0.5)
+shape = SubResource("RectangleShape2D_165a2")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="PivotPoint/SwingPoint/Sprite/HitboxArea" to="." method="_on_hitbox_area_area_entered"]

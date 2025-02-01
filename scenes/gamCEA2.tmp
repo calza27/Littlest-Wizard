@@ -22,19 +22,25 @@ offset_bottom = 1912.0
 [node name="Player" parent="." instance=ExtResource("1_ttkmc")]
 position = Vector2(1153, 648)
 
-[node name="Goblin" parent="." instance=ExtResource("4_0q57s")]
+[node name="Mobs" type="Node2D" parent="."]
+
+[node name="Goblins" type="Node2D" parent="Mobs"]
+
+[node name="Goblin" parent="Mobs/Goblins" instance=ExtResource("4_0q57s")]
 position = Vector2(3862, 2483)
 
-[node name="GoblinArcher" parent="." instance=ExtResource("5_mkeq0")]
-position = Vector2(2640, -310)
+[node name="GoblinArcher" parent="Mobs/Goblins" instance=ExtResource("5_mkeq0")]
+position = Vector2(4172, -2077)
 
-[node name="Slime" parent="." instance=ExtResource("2_f0p8i")]
+[node name="Slimes" type="Node2D" parent="Mobs"]
+
+[node name="Slime" parent="Mobs/Slimes" instance=ExtResource("2_f0p8i")]
 position = Vector2(60, 96)
 
-[node name="Slime2" parent="." instance=ExtResource("2_f0p8i")]
+[node name="Slime2" parent="Mobs/Slimes" instance=ExtResource("2_f0p8i")]
 position = Vector2(51, 1275)
 
-[node name="Slime3" parent="." instance=ExtResource("2_f0p8i")]
+[node name="Slime3" parent="Mobs/Slimes" instance=ExtResource("2_f0p8i")]
 position = Vector2(2238, 90)
 
 [node name="Trees" type="Node2D" parent="."]
