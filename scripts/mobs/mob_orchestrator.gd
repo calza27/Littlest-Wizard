@@ -1,12 +1,6 @@
-class_name MobComponent
+class_name MobOrchestrator
 extends CharacterBody2D
 
-@export var max_health: float
-@export var dodge_chance: float
-@export var move_speed: float
-@export var attack_power: float
-@export var attack_damage_type: Constants.DamageType
-@export var attack_cooldown: float
 @export var ui_label: String
 
 @onready var vision_component: VisionComponent = %VisionComponent
@@ -20,24 +14,14 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	if  self.vision_component:
-		self.vision_component.player_spotted = false
 		self.vision_component.player_is_spotted.connect(_on_vision_component_player_is_spotted)
 		
-	if  self.movement_component:
-		self.movement_component.init(self.move_speed)
-		
 	if  self.health_component:
-		self.health_component.init(self.max_health, self.max_health, 0, {Constants.DamageType.FORCE: 0.5})
 		self.health_component.health_changed.connect(_on_health_component_health_changed)
 		
 	if  self.hitbox_component:
-		self.hitbox_component.init(self.dodge_chance)
 		self.hitbox_component.attacked.connect(_on_hitbox_component_attacked)
 		self.hitbox_component.attack_dodged.connect(_on_hitbox_component_attack_dodged)
-		
-	if  self.attack_component: 
-		var attack = Attack.new(self.attack_power, self.attack_damage_type, 0.0)
-		self.attack_component.init(attack, self.attack_cooldown)
 		
 	if self.mob_graphics_component:
 		self.mob_graphics_component.play_idle_animation()

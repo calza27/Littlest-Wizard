@@ -28,14 +28,20 @@ script = ExtResource("1_uiqgj")
 
 [node name="ManaComponent" parent="." instance=ExtResource("2_n6yu5")]
 unique_name_in_owner = true
+max_mana = 100.0
+curr_mana = 100.0
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("4_t8wa6")]
 unique_name_in_owner = true
+max_health = 1000.0
+curr_health = 1000.0
 status_component = NodePath("../StatusComponent")
 
 [node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
 unique_name_in_owner = true
 status_component = NodePath("../StatusComponent")
+speed = 800.0
+weight = 1.0
 
 [node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
 unique_name_in_owner = true
@@ -63,6 +69,7 @@ inventory_component = NodePath("../InventoryComponent")
 unique_name_in_owner = true
 collision_layer = 1
 status_component = NodePath("../StatusComponent")
+dodge_chance = 0.1
 
 [node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
 light_mask = 2

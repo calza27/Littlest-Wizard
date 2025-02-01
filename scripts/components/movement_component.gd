@@ -5,18 +5,24 @@ signal traversed_max_distance
 #signal knockback
 
 @export var status_component: StatusComponent
-var speed: float
-var travelled: float
-var max_distance: float
-var weight: float
-
+@export var speed: float
+@export var travelled: float
+@export var max_distance: float
+@export var weight: float
 var pending_knockback: Attack
+
+func _ready() -> void:
+	if self.speed < 0:
+		self.speed = 0
 	
-func init(moveSpeed:float, maxRange:float = 0.0, weightF:float = 1.0) -> void:
-	self.speed = moveSpeed
-	self.max_distance = maxRange
-	self.weight = weightF
-	self.travelled = 0
+	if self.travelled < 0:
+		self.travelled = 0
+	
+	if self.max_distance < 0:
+		self.max_distance = 0
+	
+	if self.weight <= 0:
+		self.weight = 1
 
 func move(direction: Vector2, delta: float) -> void:
 	var moveSpeed = self.speed

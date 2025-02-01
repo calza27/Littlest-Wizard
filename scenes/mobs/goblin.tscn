@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://qybhe87u5fgd"]
+[gd_scene load_steps=27 format=3 uid="uid://qybhe87u5fgd"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin.gd" id="1_4hbfk"]
 [ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_jae6w"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_5v7xm"]
 [ext_resource type="PackedScene" uid="uid://dynxdmeqqbuxl" path="res://scenes/components/ai/ai_melee.tscn" id="12_ksf2p"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_32o1l"]
+[ext_resource type="PackedScene" uid="uid://dxgsii6laafcp" path="res://scenes/melee_weapon.tscn" id="13_sfldp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("3_8vflv")
@@ -72,7 +73,7 @@ radius = 33.0
 height = 90.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
-radius = 48.0104
+radius = 106.118
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
 radius = 1580.41
@@ -142,15 +143,10 @@ collision_layer = 2
 collision_mask = 31
 motion_mode = 1
 script = ExtResource("1_4hbfk")
-max_health = 200.0
-dodge_chance = 0.2
-move_speed = 500.0
-attack_power = 30.0
-attack_damage_type = 3
-attack_cooldown = 2.0
 ui_label = "goblin"
 
 [node name="GroundShadow" parent="." instance=ExtResource("2_y61aq")]
+visible = false
 
 [node name="MobGraphicsComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_2D", "animation_player")]
 unique_name_in_owner = true
@@ -166,6 +162,7 @@ sprite_frames = SubResource("SpriteFrames_k8vs7")
 animation = &"attack"
 
 [node name="partical_area_body" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+visible = false
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("BodyShape")
@@ -176,6 +173,7 @@ shape = SubResource("CircleShape2D_26cwb")
 debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
 
 [node name="partical_area_head" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+visible = false
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("HeadShape")
@@ -187,27 +185,39 @@ debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
 
 [node name="HitboxComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("7_uoojp")]
 unique_name_in_owner = true
+visible = false
 collision_layer = 2
 status_component = NodePath("../../StatusComponent")
+dodge_chance = 0.2
 
 [node name="HitboxShape" type="CollisionShape2D" parent="MobGraphicsComponent/HitboxComponent"]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_mjqkj")
 debug_color = Color(0.312927, 0.626208, 1.54018e-06, 0.42)
 
-[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("8_0ef0b")]
+[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "weapon_component") instance=ExtResource("8_0ef0b")]
 unique_name_in_owner = true
 position = Vector2(0, 36)
 collision_layer = 0
 status_component = NodePath("../../StatusComponent")
+weapon_component = NodePath("MeleeWeapon")
+damage = 30.0
+damage_type = 3
+cooldown = 2.0
 
 [node name="AttackRange" type="CollisionShape2D" parent="MobGraphicsComponent/AttackComponent"]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_bsnlh")
 debug_color = Color(0.955093, 0, 0.545015, 0.42)
 
+[node name="MeleeWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("13_sfldp")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -26)
+
 [node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_k2bm3")]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, 36)
 collision_layer = 0
 collision_mask = 1
@@ -218,14 +228,21 @@ debug_color = Color(0.663129, 0.316447, 1, 0.42)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("10_bgr8n")]
 unique_name_in_owner = true
+visible = false
+max_health = 200.0
+curr_health = 200.0
 status_component = NodePath("../StatusComponent")
 
 [node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("11_5v7xm")]
 unique_name_in_owner = true
+visible = false
 status_component = NodePath("../StatusComponent")
+speed = 500.0
+weight = 1.0
 
 [node name="AiMelee" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("12_ksf2p")]
 unique_name_in_owner = true
+visible = false
 movement_component = NodePath("../MovementComponent")
 vision_component = NodePath("../MobGraphicsComponent/VisionComponent")
 hitbox_component = NodePath("../MobGraphicsComponent/HitboxComponent")
@@ -235,11 +252,13 @@ status_component = NodePath("../StatusComponent")
 mob_graphics_component = NodePath("../MobGraphicsComponent")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_4ykfk")
 
 [node name="StatusComponent" parent="." instance=ExtResource("13_32o1l")]
 unique_name_in_owner = true
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../MobGraphicsComponent")

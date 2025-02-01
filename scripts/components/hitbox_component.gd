@@ -4,12 +4,12 @@ extends Area2D
 signal attacked(attack: Attack, dodged: bool)
 signal attack_dodged(attack: Attack)
 signal hit_by_attack(attack: Attack)
+
 @export var status_component: StatusComponent
-var dodge_chance: float
+@export var dodge_chance: float
 var rng = RandomNumberGenerator.new()
 
-func init(dodgeChance:float = 0.0) -> void:
-	self.dodge_chance = dodgeChance
+func _ready() -> void:
 	if self.dodge_chance > 1.0:
 		self.dodge_chance = 1.0
 	if self.dodge_chance < 0.0:

@@ -1,10 +1,6 @@
 class_name PlayerCharacter
 extends CharacterBody2D
 
-@export var max_health: float = 1000
-@export var max_mana: float = 100
-@export var dodge_chance: float = 0.1
-@export var move_speed: float = 800
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var mana_component: ManaComponent = %ManaComponent
 @onready var hitbox_component: HitboxComponent = %HitboxComponent
@@ -16,10 +12,6 @@ extends CharacterBody2D
 @onready var weapon: Weapon = %Weapon
 
 func _ready() -> void:
-	self.health_component.init(self.max_health, self.max_health, 0, {Constants.DamageType.ACID: 0.75})
-	self.mana_component.init(self.max_mana, self.max_mana)
-	self.hitbox_component.init(self.dodge_chance)
-	self.movement_component.init(self.move_speed)
 	var twists: Array[Twist] = []
 	#twists.append_array([Firebolt.new(5, 10), Frost.new(3), ConcussionShot.new(0.0)])
 	twists.append_array([Firebolt.new(5, 10)])

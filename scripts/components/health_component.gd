@@ -6,33 +6,32 @@ signal health_changed(newValue: float)
 signal max_health_changed(newValue: float)
 signal entity_death()
 
-var max_health: float
-var curr_health: float
-var temp_health: float
-var damage_multiplier: Dictionary
-var active_dot: Array[Constants.DamageType] = []
+@export var max_health: float
+@export var curr_health: float
+@export var temp_health: float
 @export var status_component: StatusComponent
-	
-func init(maxHealth:float = 0.0, initialHealth:float = 0.0, tempHealth:float = 0.0, damageMultipliers:Dictionary = {}) -> void:
-	self.max_health = maxHealth
-	if self.max_health < 0.0:
+var _damage_multiplier: Dictionary
+var _active_dot: Array[Constants.DamageType] = []
+
+func _ready() -> void:
+	if self.max_health < 0:
 		self.max_health = 0.0
-	self.max_health_changed.emit(self.max_health)
-		
-	self.curr_health = initialHealth
+	
 	if self.curr_health < 0.0:
 		self.curr_health = 0.0
-	self.health_changed.emit(self.curr_health)
-		
-	self.temp_health = tempHealth
+	
 	if self.temp_health < 0.0:
 		self.temp_health = 0.0
 		
-	self.damage_multiplier = damageMultipliers
+	if self.curr_health > self.max_health:
+		self.curr_health = self.max_health
+		
+func set_damage_multiplier(dict: Dictionary) -> void:
+	self._damage_multiplier = dict
 
 func take_damage(attack: Attack) -> void:
 	var damage = attack.damage
-	damage *= self.damage_multiplier.get(attack.damage_type, 1)
+	damage *= self._damage_multiplier.get(attack.damage_type, 1)
 	# if the entity has temp_health, we subtract the damage from temp_health
 	if self.temp_health > 0:
 		self.temp_health -= damage
@@ -49,8 +48,8 @@ func take_damage(attack: Attack) -> void:
 	self.health_changed.emit(self.curr_health)
 
 func apply_damage_over_time(damageOverTime: DamageOverTime) -> void:
-	if self.active_dot.find(damageOverTime.attack.damage_type) < 0:
-		self.active_dot.append(damageOverTime.attack.damage_type)
+	if self._active_dot.find(damageOverTime.attack.damage_type) < 0:
+		self._active_dot.append(damageOverTime.attack.damage_type)
 		var tickTimer = Timer.new()
 		add_child(tickTimer)
 		tickTimer.timeout.connect(self.dot_tick_timeout.bind(damageOverTime))
@@ -60,7 +59,7 @@ func apply_damage_over_time(damageOverTime: DamageOverTime) -> void:
 		await durationTimer.timeout
 		tickTimer.stop()
 		tickTimer.queue_free()
-		self.active_dot.erase(damageOverTime.attack.damage_type)
+		self._active_dot.erase(damageOverTime.attack.damage_type)
 	
 func dot_tick_timeout(damageOverTime: DamageOverTime) -> void:
 	self.take_damage(damageOverTime.attack)

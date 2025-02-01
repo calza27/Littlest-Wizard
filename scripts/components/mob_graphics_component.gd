@@ -58,16 +58,6 @@ func play_dodge_animation() -> void:
 			self.sprite_2D.play("dodge")
 	if self.animation_player:
 		self.animation_player.play("RESET")
-
-func play_attack_animation() -> void:
-	self.prevent_default = true
-	if self.sprite_2D:
-		if self._has_animation("attack-" + _facing_as_string()):
-			self.sprite_2D.play("attack-" + _facing_as_string())
-		elif self._has_animation("attack"):
-			self.sprite_2D.play("attack")
-	if self.animation_player:
-		self.animation_player.play("RESET")
 		
 func _has_animation(animationName: String) -> bool:
 	if !self.sprite_2D:

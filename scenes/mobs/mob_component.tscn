@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://iyts3wbk60jl"]
-
-[ext_resource type="Script" path="res://scripts/mobs/mob_component.gd" id="1_asptj"]
-
-[node name="MobComponent" type="CharacterBody2D"]
-script = ExtResource("1_asptj")

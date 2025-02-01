@@ -5,3 +5,4 @@ enum AiMode { STATIONARY, WANDER, PATROL, ENGAGED }
 enum TwistType { DAMAGE, DAMAGE_OVER_TIME, STATUS_EFFECT }
 enum Target { PLAYER, ENEMY, GROUND }
 enum Facing { UP, DOWN, LEFT, RIGHT }
+enum MeleeMode { SWING, THRUST }

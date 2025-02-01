@@ -9,7 +9,7 @@ extends Node2D
 @export var status_component: StatusComponent
 @export var mob_graphics_component: MobGraphicsComponent
 var curr_mode: Constants.AiMode = Constants.AiMode.STATIONARY
-@onready var player = get_node("/root/Game/Player")
+@onready var player: CharacterBody2D = get_node("/root/Game/Player")
 
 func _normalise_movement(movement: Vector2) -> Vector2:
 	var xMultiplier: int = (1 if movement.x >=0 else -1)

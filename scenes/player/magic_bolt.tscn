@@ -25,6 +25,9 @@ shape = SubResource("CapsuleShape2D_nrn8t")
 
 [node name="MovementComponent" parent="." instance=ExtResource("3_uhbwx")]
 unique_name_in_owner = true
+speed = 1000.0
+max_distance = 1500.0
+weight = 1.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
