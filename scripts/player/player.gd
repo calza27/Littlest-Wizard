@@ -5,23 +5,22 @@ extends CharacterBody2D
 @onready var mana_component: ManaComponent = %ManaComponent
 @onready var hitbox_component: HitboxComponent = %HitboxComponent
 @onready var movement_component: MovementComponent = %MovementComponent
-@onready var inventory_component: InventoryComponent = %InventoryComponent
 @onready var status_component: StatusComponent = %StatusComponent
 @onready var player_animator: PlayerAnimator = %PlayerAnimator
 @onready var graphics_component: GraphicsComponent = %GraphicsComponent
-@onready var weapon: Weapon = %Weapon
+@onready var weapon: PlayerWeapon = %Weapon
 
 func _ready() -> void:
-	var twists: Array[Twist] = []
 	#twists.append_array([Firebolt.new(5, 10), Frost.new(3), ConcussionShot.new(0.0)])
-	twists.append_array([Firebolt.new(5, 10)])
-	self.inventory_component.twists = twists
+	var firebolt: Firebolt = Firebolt.new(5, 10)
+	GameState.player_spell_book.add_twist(firebolt)
+	GameState.player_spell_book.set_twist_active(firebolt.get_name(), true)
 	#self.status_component.apply_status_condition(MageArmour.new().status_effect)
 
 func _input(event: InputEvent) -> void:
 	if !self.status_component.has_status_effect(Constants.StatusEffect.STUN):
 		if event.is_action("shoot"):
-			weapon.shoot()
+			weapon.fire_weapon()
 			
 func _physics_process(delta: float) -> void:
 	if self.status_component.has_status_effect(Constants.StatusEffect.STUN):

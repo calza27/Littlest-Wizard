@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cielpm0w42vv8" path="res://scenes/components/partical_attachment_component.tscn" id="6_4o20a"]
 [ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="7_uoojp"]
 [ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="8_0ef0b"]
-[ext_resource type="Resource" uid="uid://cgucwfcym4wb2" path="res://scripts/weapons/goblin_sword.tres" id="9_82p8p"]
+[ext_resource type="Resource" uid="uid://cgucwfcym4wb2" path="res://scripts/weapons/melee/goblin_sword.tres" id="9_82p8p"]
 [ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_k2bm3"]
 [ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="10_bgr8n"]
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_5v7xm"]
@@ -162,22 +162,22 @@ scale = Vector2(2.92188, 2.92188)
 sprite_frames = SubResource("SpriteFrames_k8vs7")
 animation = &"attack"
 
-[node name="partical_area_body" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+[node name="particle_area_body" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("BodyShape")
 
-[node name="BodyShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/partical_area_body"]
+[node name="BodyShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/particle_area_body"]
 position = Vector2(3.57627e-07, 14.2343)
 shape = SubResource("CircleShape2D_26cwb")
 debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
 
-[node name="partical_area_head" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
+[node name="particle_area_head" parent="MobGraphicsComponent/Goblin" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_4o20a")]
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("HeadShape")
 
-[node name="HeadShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/partical_area_head"]
+[node name="HeadShape" type="CollisionShape2D" parent="MobGraphicsComponent/Goblin/particle_area_head"]
 position = Vector2(3.57627e-07, -28.7656)
 shape = SubResource("CircleShape2D_26cwb")
 debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)

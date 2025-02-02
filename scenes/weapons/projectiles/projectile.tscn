@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bknoech025x6a"]
 
-[ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_xvfjm"]
+[ext_resource type="Script" path="res://scripts/weapons/projectiles/projectile.gd" id="1_xvfjm"]
 [ext_resource type="Texture2D" uid="uid://b2upi77p6yvp8" path="res://assets/weapons/ranged/projectiles/arrow.png" id="2_jio2f"]
 [ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="2_xuoux"]
 
@@ -8,7 +8,7 @@
 size = Vector2(7, 3)
 
 [node name="Projectile" type="Area2D"]
-scale = Vector2(2, 2)
+top_level = true
 collision_layer = 4
 collision_mask = 25
 script = ExtResource("1_xvfjm")

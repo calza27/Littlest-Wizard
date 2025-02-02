@@ -18,9 +18,10 @@ offset_left = -405.0
 offset_top = -407.0
 offset_right = 2690.0
 offset_bottom = 1912.0
+color = Color(0, 0.39, 0.039, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_ttkmc")]
-position = Vector2(1153, 648)
+position = Vector2(946, 675)
 
 [node name="Goblin" parent="." instance=ExtResource("4_0q57s")]
 position = Vector2(3862, 2483)
@@ -38,6 +39,7 @@ position = Vector2(51, 1275)
 position = Vector2(2238, 90)
 
 [node name="Trees" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Tree" parent="Trees" instance=ExtResource("3_e24a4")]
 position = Vector2(1448, 666)

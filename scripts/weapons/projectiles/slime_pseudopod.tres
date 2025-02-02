@@ -9,10 +9,11 @@ radius = 9.0
 [resource]
 script = ExtResource("1_h2vhj")
 texture = ExtResource("2_iio33")
+transform = Transform2D(1, 0, 0, 1, 0, 0)
 hitbox_shape = SubResource("CircleShape2D_31lcr")
 hitbox_pos = Vector2(0, 0)
 damage = 20.0
 damage_type = 1
-speed = 300.0
-max_distance = 30.0
+speed = 50.0
+max_distance = 10.0
 free_on_hit = false

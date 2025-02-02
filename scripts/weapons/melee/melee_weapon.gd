@@ -19,7 +19,7 @@ func _ready() -> void:
 		self.hitbox_collision_shape.shape = self.weapon_Attributes.hitbox_shape
 		self.hitbox_collision_shape.position = self.weapon_Attributes.hitbox_pos
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	self.look_at(player.position)
 	var direction = Vector2.RIGHT.rotated(rotation)
 	if direction.x < 0:

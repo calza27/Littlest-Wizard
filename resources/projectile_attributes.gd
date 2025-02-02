@@ -2,6 +2,7 @@ class_name ProjectileAttributes
 extends Resource
 
 @export var texture: Texture
+@export var transform: Transform2D
 @export var hitbox_shape: Shape2D
 @export var hitbox_pos: Vector2
 @export var damage: float

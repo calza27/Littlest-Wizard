@@ -1,32 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://h3c0u66gkf0v"]
+[gd_scene load_steps=6 format=3 uid="uid://h3c0u66gkf0v"]
 
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="1_mxowx"]
-[ext_resource type="Texture2D" uid="uid://hxa8ihk4knu7" path="res://assets/trees/PineTree.png" id="2_1fo4k"]
+[ext_resource type="Texture2D" uid="uid://ccxlj7562xj1g" path="res://assets/trees/Tree.png" id="2_qd2lu"]
 [ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="3_qeb5j"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_24k6f"]
+size = Vector2(92, 113)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2i04h"]
-radius = 24.0
-height = 130.0
+radius = 16.0
+height = 44.0
 
 [node name="Tree" type="StaticBody2D"]
 collision_layer = 8
 collision_mask = 0
 
 [node name="GroundShadow" parent="." instance=ExtResource("1_mxowx")]
-scale = Vector2(1.19231, 1.19231)
+scale = Vector2(3.06653, 3.06653)
 
 [node name="Tree" type="Sprite2D" parent="."]
-position = Vector2(0, -151)
-scale = Vector2(1.27344, 1.56579)
-texture = ExtResource("2_1fo4k")
+position = Vector2(0, -303)
+scale = Vector2(3.8464, 4.72944)
+texture = ExtResource("2_qd2lu")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("3_qeb5j")]
 collision_layer = 8
 collision_mask = 7
 
 [node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(0, -65)
-shape = SubResource("CapsuleShape2D_2i04h")
+position = Vector2(1, -65)
+scale = Vector2(1, 1.14356)
+shape = SubResource("RectangleShape2D_24k6f")
 debug_color = Color(0, 0.537313, 0.967388, 0.42)
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]

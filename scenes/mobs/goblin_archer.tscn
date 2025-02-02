@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_nno8g"]
 [ext_resource type="Texture2D" uid="uid://d2x7o47pap58b" path="res://assets/weapons/ranged/bow.png" id="9_q16w0"]
 [ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="10_gdyq6"]
-[ext_resource type="Resource" uid="uid://ioynsvlddhsy" path="res://scripts/weapons/goblin_bow.tres" id="10_gw3wq"]
+[ext_resource type="Resource" uid="uid://ioynsvlddhsy" path="res://scripts/weapons/ranged/goblin_bow.tres" id="10_gw3wq"]
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_m8x48"]
 [ext_resource type="PackedScene" uid="uid://px68bhsre8e5" path="res://scenes/components/ai/ai_ranged.tscn" id="12_6ld27"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_fiqf8"]
@@ -200,8 +200,6 @@ position = Vector2(0, 36)
 collision_layer = 0
 status_component = NodePath("../../StatusComponent")
 ranged_weapon_component = NodePath("RangedWeapon")
-damage = 30.0
-damage_type = 3
 cooldown = 2.0
 
 [node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_l082g")]

@@ -20,7 +20,8 @@ func _init(statusEffect: Constants.StatusEffect, durationSeconds: float, skillMo
 	if particleEffect:
 		var particle: Resource = load("res://scenes/effects/" + ParticleEffect.Effect.find_key(particleEffect).to_lower() + ".tscn")
 		var new_particle: ParticleEffect = particle.instantiate()
-		new_particle.init(durationSeconds, particleEffect)
+		new_particle.set_effect(particleEffect)
+		new_particle.set_timeout(durationSeconds)
 		self.particle_effect = new_particle
 	
 func duplicate() -> Status:

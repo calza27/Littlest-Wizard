@@ -5,12 +5,14 @@ enum Effect { NONE, FIRE, FROST }
 
 var effect: Effect
 var timeout: float
-
-func init(t: float, e: ParticleEffect.Effect) -> void:
-	self.timeout = t
-	if t < 0:
+	
+func set_timeout(duration: float) -> void:
+	self.timeout = duration
+	if self.timeout < 0:
 		self.timeout = 0
-	self.effect = e
+		
+func set_effect(particleEffect: ParticleEffect.Effect) -> void:
+	self.effect = particleEffect
 	
 func attach_to(node: ParticleAttachmentComponent, shift: Vector2) -> void:
 	var area = node.get_child(0)

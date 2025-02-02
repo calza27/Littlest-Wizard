@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cicy7j3tucj6t"
-path="res://.godot/imported/cantrip_w_particle.png-60cfc3d4d1ad400fd5490bf6b0ff1cb2.ctex"
+uid="uid://ccxlj7562xj1g"
+path="res://.godot/imported/Tree.png-b2e5da3216f0c8f2720bc5a7da91e5d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cantrip_w_particle.png"
-dest_files=["res://.godot/imported/cantrip_w_particle.png-60cfc3d4d1ad400fd5490bf6b0ff1cb2.ctex"]
+source_file="res://assets/trees/Tree.png"
+dest_files=["res://.godot/imported/Tree.png-b2e5da3216f0c8f2720bc5a7da91e5d2.ctex"]
 
 [params]
 

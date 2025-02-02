@@ -8,24 +8,27 @@ var _attack: Attack
 @onready var hitbox_collision_shape: CollisionShape2D = %CollisionShape
 
 func _ready() -> void:
-	if self.attributes:
-		self._attack = Attack.new(self.attributes.damage, self.attributes.damage_type)
-		self.sprite.texture = self.attributes.texture
-		self.hitbox_collision_shape.shape = self.attributes.hitbox_shape
-		self.hitbox_collision_shape.position = self.attributes.hitbox_pos
-		self.movement_component.speed = self.attributes.speed
-		self.movement_component.max_distance = self.attributes.max_distance
-
-func set_attributes(attr: ProjectileAttributes) -> void:
-	self.attributes = attr
+	self.top_level = true
 	if self.sprite:
 		self.sprite.texture = self.attributes.texture
+		if self.attributes.transform:
+			self.sprite.transform = self.attributes.transform
 	if self.hitbox_collision_shape:
 		self.hitbox_collision_shape.shape = self.attributes.hitbox_shape
 		self.hitbox_collision_shape.position = self.attributes.hitbox_pos
 	if self.movement_component:
 		self.movement_component.speed = self.attributes.speed
 		self.movement_component.max_distance = self.attributes.max_distance
+	
+func set_attributes(attr: ProjectileAttributes) -> void:
+	self.attributes = attr
+	self._attack = Attack.new(self.attributes.damage, self.attributes.damage_type)
+
+func get_attack() -> Attack:
+	return self._attack
+		
+func set_attack(attack: Attack) -> void:
+	self._attack = attack
 	
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation)

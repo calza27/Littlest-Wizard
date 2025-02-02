@@ -1,5 +1,6 @@
 class_name Twist
 
+var name: String
 var twist_type: Constants.TwistType
 var damage_modifier: float
 var damage_multiplier: float
@@ -15,11 +16,7 @@ func _init(damageModifier: float = 0, damageMultiplier: float = 1, knockbackModi
 	self.knockback_modifier = knockbackModifier
 	self.knockback_multiplier = knockbackMultiplier
 	
-func apply(attack: Attack) -> void:
-	attack.damage += self.damage_modifier
-	attack.damage *= self.damage_multiplier
-	attack.knockback_force += self.knockback_modifier
-	attack.knockback_force *= self.knockback_multiplier
-	if twist_type == Constants.TwistType.DAMAGE && self.damage_type_override: attack.damage_type = self.damage_type_override
-	if twist_type == Constants.TwistType.DAMAGE_OVER_TIME && self.damage_over_time: attack.damage_over_time = self.damage_over_time
-	if twist_type == Constants.TwistType.STATUS_EFFECT && self.status_effect: attack.status_effect = self.status_effect
+
+static func get_name() -> String:
+	push_error("get_name func not implemented")
+	return ""

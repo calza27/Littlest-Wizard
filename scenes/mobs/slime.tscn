@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dhm705sofa3do"]
+[gd_scene load_steps=35 format=3 uid="uid://dhm705sofa3do"]
 
 [ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_0d5gc"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_10khn"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dxynlqfncmbll" path="res://scenes/weapons/ranged/ranged_weapon.tscn" id="8_0o2n8"]
 [ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="8_1u48a"]
 [ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_g5e1l"]
-[ext_resource type="Resource" uid="uid://dctwcwlxffaru" path="res://scripts/weapons/slime_pseudopod.tres" id="9_uu4mx"]
+[ext_resource type="Resource" uid="uid://dctwcwlxffaru" path="res://scripts/weapons/projectiles/slime_pseudopod.tres" id="9_uu4mx"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_51fbp"]
 [ext_resource type="PackedScene" uid="uid://px68bhsre8e5" path="res://scenes/components/ai/ai_ranged.tscn" id="13_p80st"]
 
@@ -126,8 +126,6 @@ radius = 47.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
 radius = 68.0074
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6kr3a"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
 radius = 660.027
 
@@ -211,12 +209,12 @@ scale = Vector2(2.92188, 2.92188)
 sprite_frames = SubResource("SpriteFrames_k8vs7")
 animation = &"walk"
 
-[node name="partical_area_body" parent="MobGraphicsComponent/Slime" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_qqdsq")]
+[node name="particle_area_body" parent="MobGraphicsComponent/Slime" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_qqdsq")]
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("BodyShape")
 
-[node name="BodyShape" type="CollisionShape2D" parent="MobGraphicsComponent/Slime/partical_area_body"]
+[node name="BodyShape" type="CollisionShape2D" parent="MobGraphicsComponent/Slime/particle_area_body"]
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_26cwb")
 debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
@@ -237,8 +235,6 @@ position = Vector2(0, 36)
 collision_layer = 0
 status_component = NodePath("../../StatusComponent")
 ranged_weapon_component = NodePath("RangedWeapon")
-damage = 200.0
-damage_type = 1
 cooldown = 3.0
 
 [node name="AttackRange" type="CollisionShape2D" parent="MobGraphicsComponent/AttackComponent"]
@@ -248,7 +244,7 @@ debug_color = Color(0.955093, 0, 0.545015, 0.42)
 
 [node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_0o2n8")]
 position = Vector2(0, -25)
-texture = SubResource("CompressedTexture2D_6kr3a")
+projectile_point_pos = Vector2(1, 0)
 projectile_attributes = ExtResource("9_uu4mx")
 
 [node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_g5e1l")]
