@@ -2,8 +2,5 @@
 
 [ext_resource type="Script" path="res://scripts/components/attack_component.gd" id="1_bx0ai"]
 
-[node name="AttackRangeComponent" type="Area2D"]
+[node name="AttackRangeComponent" type="Node2D"]
 script = ExtResource("1_bx0ai")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]

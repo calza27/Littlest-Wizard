@@ -10,6 +10,7 @@ height = 68.0
 [resource]
 script = ExtResource("1_lukr2")
 texture = ExtResource("2_dy8tu")
+transform = Transform2D(1, 0, 0, 1, 0, 0)
 hitbox_shape = SubResource("CapsuleShape2D_nu0re")
 hitbox_pos = Vector2(0, 0)
 damage = 20.0

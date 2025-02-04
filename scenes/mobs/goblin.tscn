@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://qybhe87u5fgd"]
+[gd_scene load_steps=33 format=3 uid="uid://qybhe87u5fgd"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin.gd" id="1_4hbfk"]
 [ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_jae6w"]
@@ -11,9 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_k2bm3"]
 [ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="10_bgr8n"]
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_5v7xm"]
-[ext_resource type="PackedScene" uid="uid://dynxdmeqqbuxl" path="res://scenes/components/ai/ai_melee.tscn" id="12_ksf2p"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_32o1l"]
 [ext_resource type="PackedScene" uid="uid://dxgsii6laafcp" path="res://scenes/weapons/melee/melee_weapon.tscn" id="13_sfldp"]
+[ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="14_j8143"]
+[ext_resource type="Script" path="res://scripts/states/enemy_attack_melee.gd" id="15_vld7a"]
+[ext_resource type="Script" path="res://scripts/states/enemy_follow.gd" id="16_dmopw"]
+[ext_resource type="Script" path="res://scripts/states/enemy_idle.gd" id="17_eos2g"]
+[ext_resource type="Script" path="res://scripts/states/enemy_return.gd" id="18_8li3d"]
+[ext_resource type="Script" path="res://scripts/states/enemy_search.gd" id="19_a2kaa"]
+[ext_resource type="Script" path="res://scripts/states/enemy_wander.gd" id="20_8mwcw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("3_8vflv")
@@ -73,11 +79,8 @@ radius = 21.0
 radius = 33.0
 height = 90.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
-radius = 106.118
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
-radius = 1580.41
+radius = 1200.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ykfk"]
 radius = 41.0488
@@ -139,13 +142,13 @@ _data = {
 "walk_bounce": SubResource("Animation_klrya")
 }
 
-[node name="Goblin" type="CharacterBody2D" node_paths=PackedStringArray("ai_component")]
+[node name="Goblin" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 collision_layer = 2
 collision_mask = 31
 motion_mode = 1
 script = ExtResource("1_4hbfk")
 ui_label = "goblin"
-ai_component = NodePath("AiMelee")
+state_machine = NodePath("StateMachine")
 
 [node name="GroundShadow" parent="." instance=ExtResource("2_y61aq")]
 
@@ -196,28 +199,22 @@ debug_color = Color(0.312927, 0.626208, 1.54018e-06, 0.42)
 [node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "melee_weapon_component") instance=ExtResource("8_0ef0b")]
 unique_name_in_owner = true
 position = Vector2(0, 36)
-collision_layer = 0
 status_component = NodePath("../../StatusComponent")
 melee_weapon_component = NodePath("MeleeWeapon")
 cooldown = 2.0
-
-[node name="AttackRange" type="CollisionShape2D" parent="MobGraphicsComponent/AttackComponent"]
-position = Vector2(0, -25)
-shape = SubResource("CircleShape2D_bsnlh")
-debug_color = Color(0.955093, 0, 0.545015, 0.42)
 
 [node name="MeleeWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("13_sfldp")]
 unique_name_in_owner = true
 position = Vector2(0, -26)
 weapon_Attributes = ExtResource("9_82p8p")
 
-[node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_k2bm3")]
+[node name="VisionComponent" parent="." instance=ExtResource("9_k2bm3")]
 unique_name_in_owner = true
-position = Vector2(0, 36)
 collision_layer = 0
 collision_mask = 1
+vision_mode = 1
 
-[node name="VisionArea" type="CollisionShape2D" parent="MobGraphicsComponent/VisionComponent"]
+[node name="VisionArea" type="CollisionShape2D" parent="VisionComponent"]
 shape = SubResource("CircleShape2D_wem7o")
 debug_color = Color(0.663129, 0.316447, 1, 0.42)
 
@@ -233,16 +230,6 @@ status_component = NodePath("../StatusComponent")
 speed = 500.0
 weight = 1.0
 
-[node name="AiMelee" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("12_ksf2p")]
-unique_name_in_owner = true
-movement_component = NodePath("../MovementComponent")
-vision_component = NodePath("../MobGraphicsComponent/VisionComponent")
-hitbox_component = NodePath("../MobGraphicsComponent/HitboxComponent")
-health_component = NodePath("../HealthComponent")
-attack_component = NodePath("../MobGraphicsComponent/AttackComponent")
-status_component = NodePath("../StatusComponent")
-mob_graphics_component = NodePath("../MobGraphicsComponent")
-
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_4ykfk")
@@ -256,8 +243,33 @@ libraries = {
 "": SubResource("AnimationLibrary_y800p")
 }
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "mob")]
+script = ExtResource("14_j8143")
+initial_state = NodePath("EnemyIdle")
+mob = NodePath("..")
+debug = true
+
+[node name="EnemyAttackMelee" type="Node" parent="StateMachine"]
+script = ExtResource("15_vld7a")
+
+[node name="EnemyFollow" type="Node" parent="StateMachine"]
+script = ExtResource("16_dmopw")
+
+[node name="EnemyIdle" type="Node" parent="StateMachine"]
+script = ExtResource("17_eos2g")
+
+[node name="EnemyReturn" type="Node" parent="StateMachine"]
+script = ExtResource("18_8li3d")
+
+[node name="EnemySearch" type="Node" parent="StateMachine"]
+script = ExtResource("19_a2kaa")
+
+[node name="EnemyWander" type="Node" parent="StateMachine"]
+script = ExtResource("20_8mwcw")
+
 [connection signal="attack_dodged" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
 [connection signal="attacked" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attacked"]
-[connection signal="area_entered" from="MobGraphicsComponent/VisionComponent" to="MobGraphicsComponent/VisionComponent" method="_on_area_entered"]
-[connection signal="player_is_spotted" from="MobGraphicsComponent/VisionComponent" to="." method="_on_vision_component_player_is_spotted"]
+[connection signal="area_entered" from="VisionComponent" to="VisionComponent" method="_on_area_entered"]
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+
+[editable path="MobGraphicsComponent/AttackComponent/MeleeWeapon"]

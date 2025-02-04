@@ -14,30 +14,30 @@
 radius = 33.0
 height = 98.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s28he"]
-radius = 30.0
-height = 94.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfa6g"]
+size = Vector2(64, 80)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 31
 motion_mode = 1
 script = ExtResource("1_uiqgj")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="ManaComponent" parent="." instance=ExtResource("2_n6yu5")]
 unique_name_in_owner = true
+visible = false
 max_mana = 100.0
 curr_mana = 100.0
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("4_t8wa6")]
 unique_name_in_owner = true
+visible = false
 max_health = 1000.0
 curr_health = 1000.0
 status_component = NodePath("../StatusComponent")
 
 [node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
 unique_name_in_owner = true
+visible = false
 status_component = NodePath("../StatusComponent")
 speed = 800.0
 weight = 1.0
@@ -52,14 +52,18 @@ scale = Vector2(2, 2)
 
 [node name="StatusComponent" parent="." instance=ExtResource("8_5y1eh")]
 unique_name_in_owner = true
+visible = false
 
 [node name="Weapon" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("2_03gea")]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -60)
+collision_layer = 0
 status_component = NodePath("../StatusComponent")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("6_mow3a")]
 unique_name_in_owner = true
+visible = false
 collision_layer = 1
 status_component = NodePath("../StatusComponent")
 dodge_chance = 0.1
@@ -70,8 +74,9 @@ position = Vector2(0, -40)
 shape = SubResource("CapsuleShape2D_r8l86")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -40)
-shape = SubResource("CapsuleShape2D_s28he")
+shape = SubResource("RectangleShape2D_mfa6g")
 
 [connection signal="mana_changed" from="ManaComponent" to="." method="_on_mana_component_mana_changed"]
 [connection signal="max_mana_changed" from="ManaComponent" to="." method="_on_mana_component_max_mana_changed"]

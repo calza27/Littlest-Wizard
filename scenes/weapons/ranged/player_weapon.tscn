@@ -1,16 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq58hhvoivofv"]
+[gd_scene load_steps=8 format=3 uid="uid://bq58hhvoivofv"]
 
 [ext_resource type="Script" path="res://scripts/weapons/ranged/player_weapon.gd" id="1_jjvt0"]
 [ext_resource type="Texture2D" uid="uid://q7espxmr03n8" path="res://assets/weapons/ranged/staff.png" id="2_6ep4s"]
 [ext_resource type="Resource" uid="uid://b10qslp0jmxp3" path="res://scripts/weapons/projectiles/player_magic_bolt.tres" id="3_1y26u"]
+[ext_resource type="PackedScene" uid="uid://bknoech025x6a" path="res://scenes/weapons/projectiles/projectile.tscn" id="4_tmk4v"]
+[ext_resource type="Texture2D" uid="uid://cicy7j3tucj6t" path="res://assets/weapons/ranged/projectiles/cantrip_w_particle.png" id="5_ex11u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vi0fj"]
 radius = 87.0057
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ppst0"]
+radius = 16.0
+height = 50.0
+
 [node name="PlayerWeapon" type="Area2D"]
 script = ExtResource("1_jjvt0")
-texture = ExtResource("2_6ep4s")
-projectile_point_pos = Vector2(-1, -22)
 projectile_attributes = ExtResource("3_1y26u")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -28,3 +32,19 @@ texture = ExtResource("2_6ep4s")
 [node name="ProjectilePoint" type="Marker2D" parent="PivotPoint/Sprite"]
 unique_name_in_owner = true
 position = Vector2(-1, -22)
+
+[node name="Projectile" parent="." instance=ExtResource("4_tmk4v")]
+unique_name_in_owner = true
+process_mode = 4
+visible = false
+attributes = ExtResource("3_1y26u")
+
+[node name="Sprite" parent="Projectile" index="1"]
+texture = ExtResource("5_ex11u")
+
+[node name="CollisionShape" parent="Projectile" index="2"]
+position = Vector2(4, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ppst0")
+
+[editable path="Projectile"]

@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqupuq3h2bma6"]
+[gd_scene load_steps=8 format=3 uid="uid://dqupuq3h2bma6"]
 
 [ext_resource type="PackedScene" uid="uid://cav80y2kyudpj" path="res://scenes/player/player.tscn" id="1_ttkmc"]
 [ext_resource type="PackedScene" uid="uid://cr0ewxm88421o" path="res://scenes/ui/ui.tscn" id="1_x20b3"]
-[ext_resource type="PackedScene" uid="uid://dhm705sofa3do" path="res://scenes/mobs/slime.tscn" id="2_f0p8i"]
 [ext_resource type="PackedScene" uid="uid://h3c0u66gkf0v" path="res://scenes/terrain/tree.tscn" id="3_e24a4"]
 [ext_resource type="PackedScene" uid="uid://qybhe87u5fgd" path="res://scenes/mobs/goblin.tscn" id="4_0q57s"]
+[ext_resource type="PackedScene" uid="uid://kksh6kijgmep" path="res://scenes/mobs/slime.tscn" id="5_5g7ct"]
 [ext_resource type="PackedScene" uid="uid://bys2evsx2rsm0" path="res://scenes/mobs/goblin_archer.tscn" id="5_mkeq0"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="7_goi7o"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -14,29 +15,32 @@ y_sort_enabled = true
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = -405.0
-offset_top = -407.0
-offset_right = 2690.0
-offset_bottom = 1912.0
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.073
+offset_left = 8.0
+offset_top = -1.0
+offset_right = -13.0
+offset_bottom = 3.15991
 color = Color(0, 0.39, 0.039, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_ttkmc")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_ttkmc")]
 position = Vector2(946, 675)
 
 [node name="Goblin" parent="." instance=ExtResource("4_0q57s")]
-position = Vector2(3862, 2483)
+position = Vector2(3649, 2560)
 
 [node name="GoblinArcher" parent="." instance=ExtResource("5_mkeq0")]
-position = Vector2(2640, -310)
+position = Vector2(3024, -28)
 
-[node name="Slime" parent="." instance=ExtResource("2_f0p8i")]
-position = Vector2(60, 96)
+[node name="Slime" parent="." instance=ExtResource("5_5g7ct")]
+position = Vector2(25, 1124)
 
-[node name="Slime2" parent="." instance=ExtResource("2_f0p8i")]
-position = Vector2(51, 1275)
+[node name="Slime2" parent="." instance=ExtResource("5_5g7ct")]
+position = Vector2(-419, 1052)
 
-[node name="Slime3" parent="." instance=ExtResource("2_f0p8i")]
-position = Vector2(2238, 90)
+[node name="Slime3" parent="." instance=ExtResource("5_5g7ct")]
+position = Vector2(-342, 1442)
 
 [node name="Trees" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -53,6 +57,31 @@ position = Vector2(1342, 899)
 [node name="Tree4" parent="Trees" instance=ExtResource("3_e24a4")]
 position = Vector2(1549, 1013)
 
+[node name="Tree5" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3614, 2371)
+
+[node name="Tree6" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3707, 2321)
+
+[node name="Tree7" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3520, 2388)
+
+[node name="Tree8" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3441, 2439)
+
+[node name="Tree9" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3353, 2520)
+
+[node name="Tree10" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3298, 2611)
+
+[node name="Tree11" parent="Trees" instance=ExtResource("3_e24a4")]
+position = Vector2(3801, 2321)
+
 [node name="UiCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UiCanvasLayer" instance=ExtResource("1_x20b3")]
+
+[node name="Camera" type="Camera2D" parent="." groups=["camera"]]
+position = Vector2(947, 623)
+script = ExtResource("7_goi7o")

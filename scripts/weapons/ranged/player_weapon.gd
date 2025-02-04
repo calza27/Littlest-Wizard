@@ -23,8 +23,8 @@ func _physics_process(_delta: float) -> void:
 func fire_weapon() -> void:
 	if self.ready_to_attack:
 		self.ready_to_attack = false
-		const PROJECTILE = preload(Files.PROJECTILES.projectile)
-		var new_projectile = PROJECTILE.instantiate()
+		var new_projectile: Projectile = self.projectile.duplicate()
+		new_projectile.set_inert(false)
 		new_projectile.set_attributes(self.projectile_attributes)
 		var attack: Attack = new_projectile.get_attack()
 		attack.knockback_force = self.magic_bolt_knockback_force

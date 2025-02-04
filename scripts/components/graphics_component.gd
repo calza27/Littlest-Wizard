@@ -24,6 +24,7 @@ func _attach_effect(particleEffect: ParticleEffect, point: ParticleAttachmentCom
 	var numEffects = rng.randi_range(3, 7)
 	for num in numEffects:
 		var e: ParticleEffect = particleEffect.duplicate()
+		e.set_timeout(particleEffect.timeout)
 		var offset: Vector2 = point.get_random_position()
 		e.attach_to(point, offset)
 	

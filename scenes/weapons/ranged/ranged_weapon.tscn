@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxynlqfncmbll"]
+[gd_scene load_steps=6 format=3 uid="uid://dxynlqfncmbll"]
 
 [ext_resource type="Script" path="res://scripts/weapons/ranged/ranged_weapon.gd" id="1_xy3xd"]
+[ext_resource type="Texture2D" uid="uid://d2x7o47pap58b" path="res://assets/weapons/ranged/bow.png" id="2_8m1px"]
+[ext_resource type="PackedScene" uid="uid://bknoech025x6a" path="res://scenes/weapons/projectiles/projectile.tscn" id="3_ib7fb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8yjca"]
+radius = 800.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5rwbi"]
+radius = 100.0
 
 [node name="RangedWeapon" type="Node2D"]
 script = ExtResource("1_xy3xd")
@@ -15,7 +23,29 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 position = Vector2(65, 0)
 scale = Vector2(2, 2)
+texture = ExtResource("2_8m1px")
 
 [node name="ProjectilePoint" type="Marker2D" parent="PivotPoint/Sprite"]
 unique_name_in_owner = true
 position = Vector2(7, 0)
+
+[node name="Projectile" parent="." instance=ExtResource("3_ib7fb")]
+unique_name_in_owner = true
+position = Vector2(79, 0)
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="AttackRangeShape" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_8yjca")
+
+[node name="CloseInRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CloseInRangeShape" type="CollisionShape2D" parent="CloseInRange"]
+shape = SubResource("CircleShape2D_5rwbi")
+
+[connection signal="area_entered" from="AttackRange" to="." method="_on_attack_range_area_entered"]
+[connection signal="area_exited" from="AttackRange" to="." method="_on_attack_range_area_exited"]
+[connection signal="area_entered" from="CloseInRange" to="." method="_on_close_in_range_area_entered"]
+[connection signal="area_exited" from="CloseInRange" to="." method="_on_close_in_range_area_exited"]

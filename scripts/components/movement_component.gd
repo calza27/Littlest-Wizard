@@ -2,7 +2,6 @@ class_name MovementComponent
 extends Node2D
 
 signal traversed_max_distance
-#signal knockback
 
 @export var status_component: StatusComponent
 @export var speed: float

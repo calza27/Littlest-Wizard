@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://h3c0u66gkf0v"]
+[gd_scene load_steps=5 format=3 uid="uid://h3c0u66gkf0v"]
 
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="1_mxowx"]
 [ext_resource type="Texture2D" uid="uid://ccxlj7562xj1g" path="res://assets/trees/Tree.png" id="2_qd2lu"]
@@ -7,13 +7,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_24k6f"]
 size = Vector2(92, 113)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2i04h"]
-radius = 16.0
-height = 44.0
-
 [node name="Tree" type="StaticBody2D"]
 collision_layer = 8
 collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(1, -65)
+scale = Vector2(1, 1.14356)
+shape = SubResource("RectangleShape2D_24k6f")
+debug_color = Color(0, 0.537313, 0.967388, 0.42)
 
 [node name="GroundShadow" parent="." instance=ExtResource("1_mxowx")]
 scale = Vector2(3.06653, 3.06653)
@@ -31,10 +33,4 @@ collision_mask = 7
 position = Vector2(1, -65)
 scale = Vector2(1, 1.14356)
 shape = SubResource("RectangleShape2D_24k6f")
-debug_color = Color(0, 0.537313, 0.967388, 0.42)
-
-[node name="CollisionShape" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -66)
-shape = SubResource("CapsuleShape2D_2i04h")
 debug_color = Color(0, 0.537313, 0.967388, 0.42)

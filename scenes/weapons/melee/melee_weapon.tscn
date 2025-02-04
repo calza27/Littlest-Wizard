@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxgsii6laafcp"]
+[gd_scene load_steps=10 format=3 uid="uid://dxgsii6laafcp"]
 
 [ext_resource type="Script" path="res://scripts/weapons/melee/melee_weapon.gd" id="1_esq8h"]
 [ext_resource type="Texture2D" uid="uid://70i32qjl31n5" path="res://assets/weapons/melee/sword.png" id="2_3mhk5"]
@@ -257,6 +257,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_165a2"]
 size = Vector2(20, 3)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_t3eje"]
+radius = 110.0
+
 [node name="MeleeWeapon" type="Node2D"]
 visible = false
 z_index = 1
@@ -288,5 +291,13 @@ unique_name_in_owner = true
 position = Vector2(5, 0.5)
 shape = SubResource("RectangleShape2D_165a2")
 
+[node name="MeleeRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="MeleeRangeShape" type="CollisionShape2D" parent="MeleeRange"]
+shape = SubResource("CircleShape2D_t3eje")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="PivotPoint/SwingPoint/Sprite/HitboxArea" to="." method="_on_hitbox_area_area_entered"]
+[connection signal="area_entered" from="MeleeRange" to="." method="_on_melee_range_area_entered"]
+[connection signal="area_exited" from="MeleeRange" to="." method="_on_melee_range_area_exited"]

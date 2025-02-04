@@ -1,66 +1,71 @@
-[gd_scene load_steps=35 format=3 uid="uid://dhm705sofa3do"]
+[gd_scene load_steps=41 format=3 uid="uid://kksh6kijgmep"]
 
-[ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_0d5gc"]
-[ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_10khn"]
-[ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_se7di"]
-[ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="3_cfuba"]
-[ext_resource type="Texture2D" uid="uid://ctmxkefybx6fr" path="res://assets/mobs/Slime.png" id="3_qwkma"]
-[ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="4_0005g"]
-[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="5_dagfm"]
-[ext_resource type="PackedScene" uid="uid://cielpm0w42vv8" path="res://scenes/components/partical_attachment_component.tscn" id="6_qqdsq"]
-[ext_resource type="PackedScene" uid="uid://dxynlqfncmbll" path="res://scenes/weapons/ranged/ranged_weapon.tscn" id="8_0o2n8"]
-[ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="8_1u48a"]
-[ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="9_g5e1l"]
-[ext_resource type="Resource" uid="uid://dctwcwlxffaru" path="res://scripts/weapons/projectiles/slime_pseudopod.tres" id="9_uu4mx"]
-[ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_51fbp"]
-[ext_resource type="PackedScene" uid="uid://px68bhsre8e5" path="res://scenes/components/ai/ai_ranged.tscn" id="13_p80st"]
+[ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_4ypr0"]
+[ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_6m07i"]
+[ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="3_mwkp2"]
+[ext_resource type="Texture2D" uid="uid://ctmxkefybx6fr" path="res://assets/mobs/Slime.png" id="4_vg5m0"]
+[ext_resource type="PackedScene" uid="uid://cielpm0w42vv8" path="res://scenes/components/partical_attachment_component.tscn" id="5_myi6v"]
+[ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="6_xum4a"]
+[ext_resource type="PackedScene" uid="uid://c5ckvp8jsbux8" path="res://scenes/components/attack_component.tscn" id="7_xhnpo"]
+[ext_resource type="PackedScene" uid="uid://dxynlqfncmbll" path="res://scenes/weapons/ranged/ranged_weapon.tscn" id="8_2yg5v"]
+[ext_resource type="Resource" uid="uid://dctwcwlxffaru" path="res://scripts/weapons/projectiles/slime_pseudopod.tres" id="9_kl2ml"]
+[ext_resource type="PackedScene" uid="uid://cuqapv6ldsag1" path="res://scenes/components/vision_component.tscn" id="10_p61am"]
+[ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="11_2052n"]
+[ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="12_88y1f"]
+[ext_resource type="PackedScene" uid="uid://d33gjpnltoxh" path="res://scenes/states/state_machine.tscn" id="14_77ag3"]
+[ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="14_rao0i"]
+[ext_resource type="Script" path="res://scripts/states/enemy_wander.gd" id="15_e2cf6"]
+[ext_resource type="Script" path="res://scripts/states/enemy_follow.gd" id="16_d8bae"]
+[ext_resource type="Script" path="res://scripts/states/enemy_search.gd" id="18_7yj4l"]
+[ext_resource type="Script" path="res://scripts/states/enemy_attack_ranged.gd" id="19_b1y8q"]
+[ext_resource type="Script" path="res://scripts/states/enemy_return.gd" id="19_c8hld"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_suq1w"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcorj"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7lft"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02xmy"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0iyl8"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fx1ju"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2ube"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttnbk"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfwx2"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_llb43"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbv71"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6um41"]
-atlas = ExtResource("3_qwkma")
+atlas = ExtResource("4_vg5m0")
 region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8vs7"]
@@ -123,11 +128,14 @@ radius = 33.0472
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ykfk"]
 radius = 47.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bsnlh"]
-radius = 68.0074
+[sub_resource type="CircleShape2D" id="CircleShape2D_1cicw"]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2h6l"]
+radius = 0.01
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
-radius = 660.027
+radius = 450.0
 
 [sub_resource type="Animation" id="Animation_5e7mw"]
 length = 0.001
@@ -186,20 +194,20 @@ _data = {
 "walk_bounce": SubResource("Animation_klrya")
 }
 
-[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("ai_component")]
+[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 collision_layer = 2
 collision_mask = 31
 motion_mode = 1
-script = ExtResource("1_0d5gc")
+script = ExtResource("1_4ypr0")
 ui_label = "slime"
-ai_component = NodePath("AiRanged")
+state_machine = NodePath("StateMachine")
 
-[node name="GroundShadow" parent="." instance=ExtResource("2_10khn")]
+[node name="GroundShadow" parent="." instance=ExtResource("2_6m07i")]
 
 [node name="MobGraphicsComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_2D", "animation_player")]
 unique_name_in_owner = true
 position = Vector2(0, -36)
-script = ExtResource("2_se7di")
+script = ExtResource("3_mwkp2")
 sprite_2D = NodePath("Slime")
 animation_player = NodePath("../AnimationPlayer")
 
@@ -209,7 +217,7 @@ scale = Vector2(2.92188, 2.92188)
 sprite_frames = SubResource("SpriteFrames_k8vs7")
 animation = &"walk"
 
-[node name="particle_area_body" parent="MobGraphicsComponent/Slime" node_paths=PackedStringArray("collision_shape") instance=ExtResource("6_qqdsq")]
+[node name="particle_area_body" parent="MobGraphicsComponent/Slime" node_paths=PackedStringArray("collision_shape") instance=ExtResource("5_myi6v")]
 position = Vector2(0, 3)
 scale = Vector2(0.342246, 0.342246)
 collision_shape = NodePath("BodyShape")
@@ -219,7 +227,7 @@ position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_26cwb")
 debug_color = Color(0.590354, 0.648195, 3.85046e-07, 0.42)
 
-[node name="HitboxComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("4_0005g")]
+[node name="HitboxComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("6_xum4a")]
 unique_name_in_owner = true
 collision_layer = 2
 status_component = NodePath("../../StatusComponent")
@@ -229,62 +237,83 @@ position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_4ykfk")
 debug_color = Color(0.312927, 0.626208, 1.54018e-06, 0.42)
 
-[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "ranged_weapon_component") instance=ExtResource("8_1u48a")]
+[node name="AttackComponent" parent="MobGraphicsComponent" node_paths=PackedStringArray("status_component", "ranged_weapon_component") instance=ExtResource("7_xhnpo")]
 unique_name_in_owner = true
 position = Vector2(0, 36)
-collision_layer = 0
 status_component = NodePath("../../StatusComponent")
 ranged_weapon_component = NodePath("RangedWeapon")
 cooldown = 3.0
 
-[node name="AttackRange" type="CollisionShape2D" parent="MobGraphicsComponent/AttackComponent"]
+[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_2yg5v")]
 position = Vector2(0, -25)
-shape = SubResource("CircleShape2D_bsnlh")
-debug_color = Color(0.955093, 0, 0.545015, 0.42)
+projectile_attributes = ExtResource("9_kl2ml")
 
-[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_0o2n8")]
-position = Vector2(0, -25)
-projectile_point_pos = Vector2(1, 0)
-projectile_attributes = ExtResource("9_uu4mx")
+[node name="Sprite" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/PivotPoint" index="0"]
+texture = null
 
-[node name="VisionComponent" parent="MobGraphicsComponent" instance=ExtResource("9_g5e1l")]
+[node name="ProjectilePoint" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/PivotPoint/Sprite" index="0"]
+position = Vector2(-9, 0)
+
+[node name="Projectile" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="2"]
+attributes = ExtResource("9_kl2ml")
+
+[node name="AttackRangeShape" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/AttackRange" index="0"]
+shape = SubResource("CircleShape2D_1cicw")
+
+[node name="CloseInRange" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="4"]
+monitoring = false
+
+[node name="CloseInRangeShape" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/CloseInRange" index="0"]
+shape = SubResource("CircleShape2D_x2h6l")
+
+[node name="VisionComponent" parent="." instance=ExtResource("10_p61am")]
 unique_name_in_owner = true
-position = Vector2(0, 36)
 collision_layer = 0
 collision_mask = 1
 
-[node name="VisionArea" type="CollisionShape2D" parent="MobGraphicsComponent/VisionComponent"]
+[node name="VisionArea" type="CollisionShape2D" parent="VisionComponent"]
 position = Vector2(-5, 0)
 shape = SubResource("CircleShape2D_wem7o")
 debug_color = Color(0.663129, 0.316447, 1, 0.42)
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("3_cfuba")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("11_2052n")]
 unique_name_in_owner = true
 max_health = 100.0
 curr_health = 100.0
 status_component = NodePath("../StatusComponent")
 
-[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_dagfm")]
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("12_88y1f")]
 unique_name_in_owner = true
 status_component = NodePath("../StatusComponent")
 speed = 300.0
 weight = 1.0
 
-[node name="AiRanged" parent="." node_paths=PackedStringArray("movement_component", "vision_component", "hitbox_component", "health_component", "attack_component", "status_component", "mob_graphics_component") instance=ExtResource("13_p80st")]
-movement_component = NodePath("../MovementComponent")
-vision_component = NodePath("../MobGraphicsComponent/VisionComponent")
-hitbox_component = NodePath("../MobGraphicsComponent/HitboxComponent")
-health_component = NodePath("../HealthComponent")
-attack_component = NodePath("../MobGraphicsComponent/AttackComponent")
-status_component = NodePath("../StatusComponent")
-mob_graphics_component = NodePath("../MobGraphicsComponent")
-
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_4ykfk")
 
-[node name="StatusComponent" parent="." instance=ExtResource("13_51fbp")]
+[node name="StatusComponent" parent="." instance=ExtResource("14_rao0i")]
 unique_name_in_owner = true
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("initial_state", "mob") instance=ExtResource("14_77ag3")]
+initial_state = NodePath("EnemyWander")
+mob = NodePath("..")
+
+[node name="EnemyWander" type="Node" parent="StateMachine"]
+script = ExtResource("15_e2cf6")
+distance_limit = 500.0
+
+[node name="EnemyFollow" type="Node" parent="StateMachine"]
+script = ExtResource("16_d8bae")
+
+[node name="EnemySearch" type="Node" parent="StateMachine"]
+script = ExtResource("18_7yj4l")
+
+[node name="EnemyReturn" type="Node" parent="StateMachine"]
+script = ExtResource("19_c8hld")
+
+[node name="EnemyAttackRanged" type="Node" parent="StateMachine"]
+script = ExtResource("19_b1y8q")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../MobGraphicsComponent")
@@ -292,4 +321,6 @@ libraries = {
 "": SubResource("AnimationLibrary_y800p")
 }
 
-[connection signal="area_entered" from="MobGraphicsComponent/VisionComponent" to="MobGraphicsComponent/VisionComponent" method="_on_area_entered"]
+[connection signal="area_entered" from="VisionComponent" to="VisionComponent" method="_on_area_entered"]
+
+[editable path="MobGraphicsComponent/AttackComponent/RangedWeapon"]

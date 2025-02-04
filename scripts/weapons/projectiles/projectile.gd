@@ -2,12 +2,18 @@ class_name Projectile
 extends Area2D
 
 @export var attributes: ProjectileAttributes
+@export var inert: bool = true
 var _attack: Attack
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var sprite: Sprite2D = %Sprite
 @onready var hitbox_collision_shape: CollisionShape2D = %CollisionShape
 
 func _ready() -> void:
+	if self.inert:
+		self.set_process_mode(Node.PROCESS_MODE_DISABLED)
+		self.hide()
+		return
+
 	self.top_level = true
 	if self.sprite:
 		self.sprite.texture = self.attributes.texture
@@ -19,6 +25,12 @@ func _ready() -> void:
 	if self.movement_component:
 		self.movement_component.speed = self.attributes.speed
 		self.movement_component.max_distance = self.attributes.max_distance
+
+func set_inert(i: bool) -> void:
+	self.inert = i
+	if !self.inert:
+		self.set_process_mode(Node.PROCESS_MODE_INHERIT)
+		self.show()
 	
 func set_attributes(attr: ProjectileAttributes) -> void:
 	self.attributes = attr

@@ -2,8 +2,8 @@ class_name MobOrchestrator
 extends CharacterBody2D
 
 @export var ui_label: String
-@export var ai_component: AIComponent
-
+@export var state_machine: StateMachine
+var origin_point: Vector2
 @onready var vision_component: VisionComponent = %VisionComponent
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
@@ -11,10 +11,8 @@ extends CharacterBody2D
 @onready var attack_component: AttackComponent = %AttackComponent
 @onready var mob_graphics_component: MobGraphicsComponent = %MobGraphicsComponent
 @onready var status_component: StatusComponent = %StatusComponent
-
 func _ready() -> void:
-	if  self.vision_component:
-		self.vision_component.player_is_spotted.connect(_on_vision_component_player_is_spotted)
+	self.origin_point = self.global_position
 		
 	if  self.health_component:
 		self.health_component.health_changed.connect(_on_health_component_health_changed)
@@ -25,6 +23,20 @@ func _ready() -> void:
 		
 	if self.mob_graphics_component:
 		self.mob_graphics_component.play_idle_animation()
+		
+	if self.state_machine:
+		self.state_machine.start()
+		
+func _physics_process(delta: float) -> void:
+	if self.mob_graphics_component:
+		if self.status_component.has_status_effect(Constants.StatusEffect.STUN):
+			self.mob_graphics_component.play_stun_animation()
+			return
+			
+		if velocity.length() == 0:
+			self.mob_graphics_component.play_idle_animation()
+		else:
+			self.mob_graphics_component.play_walk_animation()
 
 func _on_hitbox_component_attacked(attack: Attack, dodged: bool) -> void:
 	EventBus.focus_enemy.emit(self.ui_label, self.health_component.max_health, self.health_component.curr_health)
@@ -50,9 +62,6 @@ func _apply_attack(attack: Attack) -> void:
 			self.status_component.apply_status_condition(attack.status_effect)
 			if attack.status_effect.particle_effect && self.mob_graphics_component:
 				self.mob_graphics_component.attach_random(attack.status_effect.particle_effect)
-
-func _on_vision_component_player_is_spotted() -> void:
-	self.ai_component.set_mode(Constants.AiMode.ENGAGED)
 
 func _on_hitbox_component_attack_dodged(_attack: Attack) -> void:
 	if self.mob_graphics_component:

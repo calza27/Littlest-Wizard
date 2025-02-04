@@ -8,8 +8,8 @@ extends CharacterBody2D
 @onready var status_component: StatusComponent = %StatusComponent
 @onready var player_animator: PlayerAnimator = %PlayerAnimator
 @onready var graphics_component: GraphicsComponent = %GraphicsComponent
+@onready var collision_shape: CollisionShape2D = %CollisionShape
 @onready var weapon: PlayerWeapon = %Weapon
-
 func _ready() -> void:
 	#twists.append_array([Firebolt.new(5, 10), Frost.new(3), ConcussionShot.new(0.0)])
 	var firebolt: Firebolt = Firebolt.new(5, 10)

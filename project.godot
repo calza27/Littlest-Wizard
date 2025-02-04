@@ -17,20 +17,26 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Constants="*res://constants/enums.gd"
-EventBus="*res://constants/event_bus.gd"
-Files="*res://constants/files.gd"
-GameState="*res://constants/game_state.gd"
+Constants="*res://singletons/enums.gd"
+EventBus="*res://singletons/event_bus.gd"
+Files="*res://singletons/files.gd"
+GameState="*res://singletons/game_state.gd"
+Utils="*res://singletons/utils.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/aspect="expand"
+window/stretch/scale=0.75
 
 [dotnet]
 
 project/assembly_name="Littlest Wizard"
+
+[global_group]
+
+player=""
+camera=""
 
 [gui]
 
@@ -114,6 +120,9 @@ Spell_8={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Projectiles"
+2d_physics/layer_4="Static Terrain"
+2d_physics/layer_5="Interactable Objects"
+2d_physics/layer_6="Items"
 
 [rendering]
 
