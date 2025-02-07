@@ -31,6 +31,7 @@ position = Vector2(7, 0)
 
 [node name="Projectile" parent="." instance=ExtResource("3_ib7fb")]
 unique_name_in_owner = true
+visible = false
 position = Vector2(79, 0)
 
 [node name="AttackRange" type="Area2D" parent="."]
