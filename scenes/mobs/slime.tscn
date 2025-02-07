@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://kksh6kijgmep"]
+[gd_scene load_steps=40 format=3 uid="uid://kksh6kijgmep"]
 
 [ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_4ypr0"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_6m07i"]
@@ -14,11 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="12_88y1f"]
 [ext_resource type="PackedScene" uid="uid://d33gjpnltoxh" path="res://scenes/states/state_machine.tscn" id="14_77ag3"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="14_rao0i"]
-[ext_resource type="Script" path="res://scripts/states/enemy_wander.gd" id="15_e2cf6"]
-[ext_resource type="Script" path="res://scripts/states/enemy_follow.gd" id="16_d8bae"]
-[ext_resource type="Script" path="res://scripts/states/enemy_search.gd" id="18_7yj4l"]
-[ext_resource type="Script" path="res://scripts/states/enemy_attack_ranged.gd" id="19_b1y8q"]
-[ext_resource type="Script" path="res://scripts/states/enemy_return.gd" id="19_c8hld"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_wander.gd" id="15_e2cf6"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_follow.gd" id="16_d8bae"]
+[ext_resource type="Script" path="res://scripts/states/enemy/slime/slime_follow.gd" id="18_lndai"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_attack_ranged.gd" id="19_b1y8q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_suq1w"]
 atlas = ExtResource("4_vg5m0")
@@ -272,7 +271,6 @@ collision_layer = 0
 collision_mask = 1
 
 [node name="VisionArea" type="CollisionShape2D" parent="VisionComponent"]
-position = Vector2(-5, 0)
 shape = SubResource("CircleShape2D_wem7o")
 debug_color = Color(0.663129, 0.316447, 1, 0.42)
 
@@ -306,14 +304,11 @@ distance_limit = 500.0
 [node name="EnemyFollow" type="Node" parent="StateMachine"]
 script = ExtResource("16_d8bae")
 
-[node name="EnemySearch" type="Node" parent="StateMachine"]
-script = ExtResource("18_7yj4l")
-
-[node name="EnemyReturn" type="Node" parent="StateMachine"]
-script = ExtResource("19_c8hld")
-
 [node name="EnemyAttackRanged" type="Node" parent="StateMachine"]
 script = ExtResource("19_b1y8q")
+
+[node name="SlimeFollow" type="Node" parent="StateMachine"]
+script = ExtResource("18_lndai")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../MobGraphicsComponent")

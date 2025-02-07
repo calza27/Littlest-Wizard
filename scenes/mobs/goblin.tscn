@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://qybhe87u5fgd"]
+[gd_scene load_steps=34 format=3 uid="uid://qybhe87u5fgd"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin.gd" id="1_4hbfk"]
 [ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_jae6w"]
@@ -14,12 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_32o1l"]
 [ext_resource type="PackedScene" uid="uid://dxgsii6laafcp" path="res://scenes/weapons/melee/melee_weapon.tscn" id="13_sfldp"]
 [ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="14_j8143"]
-[ext_resource type="Script" path="res://scripts/states/enemy_attack_melee.gd" id="15_vld7a"]
-[ext_resource type="Script" path="res://scripts/states/enemy_follow.gd" id="16_dmopw"]
-[ext_resource type="Script" path="res://scripts/states/enemy_idle.gd" id="17_eos2g"]
-[ext_resource type="Script" path="res://scripts/states/enemy_return.gd" id="18_8li3d"]
-[ext_resource type="Script" path="res://scripts/states/enemy_search.gd" id="19_a2kaa"]
-[ext_resource type="Script" path="res://scripts/states/enemy_wander.gd" id="20_8mwcw"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_attack_melee.gd" id="15_vld7a"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_follow.gd" id="16_dmopw"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_idle.gd" id="17_eos2g"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_return.gd" id="18_8li3d"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_search.gd" id="19_a2kaa"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_wander.gd" id="20_8mwcw"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_stunned.gd" id="21_7ncmb"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_dodge.gd" id="22_axurf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("3_8vflv")
@@ -78,9 +80,6 @@ radius = 21.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mjqkj"]
 radius = 33.0
 height = 90.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
-radius = 1200.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ykfk"]
 radius = 41.0488
@@ -210,13 +209,14 @@ weapon_Attributes = ExtResource("9_82p8p")
 
 [node name="VisionComponent" parent="." instance=ExtResource("9_k2bm3")]
 unique_name_in_owner = true
+position = Vector2(0, -22)
 collision_layer = 0
 collision_mask = 1
 vision_mode = 1
+debug = true
 
-[node name="VisionArea" type="CollisionShape2D" parent="VisionComponent"]
-shape = SubResource("CircleShape2D_wem7o")
-debug_color = Color(0.663129, 0.316447, 1, 0.42)
+[node name="VisionArea" type="CollisionPolygon2D" parent="VisionComponent"]
+polygon = PackedVector2Array(0, 0, 0, 1200, 311, 1159, 600, 1039, 850, 850, 1039, 600, 1159, 311, 1200, 0, 1159, -310, 1040, -600, 848, -849, 600, -1039, 311, -1159, 0, -1200, 0, 0)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("10_bgr8n")]
 unique_name_in_owner = true
@@ -245,7 +245,7 @@ libraries = {
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "mob")]
 script = ExtResource("14_j8143")
-initial_state = NodePath("EnemyIdle")
+initial_state = NodePath("EnemyWander")
 mob = NodePath("..")
 debug = true
 
@@ -263,9 +263,17 @@ script = ExtResource("18_8li3d")
 
 [node name="EnemySearch" type="Node" parent="StateMachine"]
 script = ExtResource("19_a2kaa")
+timeout = 15
 
 [node name="EnemyWander" type="Node" parent="StateMachine"]
 script = ExtResource("20_8mwcw")
+distance_limit = 750.0
+
+[node name="EnemyStunned" type="Node" parent="StateMachine"]
+script = ExtResource("21_7ncmb")
+
+[node name="EnemyDodge" type="Node" parent="StateMachine"]
+script = ExtResource("22_axurf")
 
 [connection signal="attack_dodged" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
 [connection signal="attacked" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attacked"]

@@ -1,9 +1,85 @@
-[gd_scene load_steps=10 format=3 uid="uid://cr0ewxm88421o"]
+[gd_scene load_steps=23 format=3 uid="uid://cr0ewxm88421o"]
 
 [ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_qtxou"]
+[ext_resource type="Texture2D" uid="uid://dd5j727no5yk1" path="res://assets/items/coin.png" id="2_jxb56"]
+[ext_resource type="LabelSettings" uid="uid://ct3rrmjel6kri" path="res://resources/money_label_settings.tres" id="3_r0xlf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl30t"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6h1nm"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_061y7"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bkb3"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gshi2"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2e6b4"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77t2o"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87vab"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmj2u"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5dui"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16s21"]
+atlas = ExtResource("2_jxb56")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ir72j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bkb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gshi2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2e6b4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77t2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87vab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmj2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5dui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16s21")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ewgg"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -44,6 +120,70 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_wl30t")
+
+[node name="MoneyMargin" type="MarginContainer" parent="UpperHalfPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="MoneyPanel" type="PanelContainer" parent="UpperHalfPanel/MoneyMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6h1nm")
+
+[node name="MarginContainer" type="MarginContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="CoinMargin" type="MarginContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer/CoinMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_061y7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer/CoinMargin/PanelContainer"]
+position = Vector2(32, 32)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_ir72j")
+autoplay = "default"
+
+[node name="CounterMargin" type="MarginContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer/CounterMargin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer/CounterMargin/HBoxContainer"]
+layout_mode = 2
+text = "x"
+label_settings = ExtResource("3_r0xlf")
+
+[node name="MoneyLabel" type="Label" parent="UpperHalfPanel/MoneyMargin/MoneyPanel/MarginContainer/HBoxContainer/CounterMargin/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0
+"
+label_settings = ExtResource("3_r0xlf")
 
 [node name="EnemyHealthPanel" type="PanelContainer" parent="UpperHalfPanel"]
 unique_name_in_owner = true

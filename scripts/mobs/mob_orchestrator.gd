@@ -11,6 +11,7 @@ var origin_point: Vector2
 @onready var attack_component: AttackComponent = %AttackComponent
 @onready var mob_graphics_component: MobGraphicsComponent = %MobGraphicsComponent
 @onready var status_component: StatusComponent = %StatusComponent
+
 func _ready() -> void:
 	self.origin_point = self.global_position
 		
@@ -23,6 +24,13 @@ func _ready() -> void:
 		
 	if self.mob_graphics_component:
 		self.mob_graphics_component.play_idle_animation()
+	
+	if self.movement_component:
+		self.movement_component.direction_changed.connect(_on_movement_direction_changed)
+		
+	if self.vision_component:
+		self.vision_component.player_spotted.connect(_on_player_spotted)
+		self.vision_component.player_lost.connect(_on_player_lost)
 		
 	if self.state_machine:
 		self.state_machine.start()
@@ -69,3 +77,19 @@ func _on_hitbox_component_attack_dodged(_attack: Attack) -> void:
 
 func _on_health_component_health_changed(newValue: float) -> void:
 	EventBus.focus_enemy.emit(self.ui_label, self.health_component.max_health, newValue)
+	
+func _on_movement_direction_changed(new: Constants.Direction) -> void:
+	if self.mob_graphics_component:
+		self.mob_graphics_component.set_facing_for_direction(new)
+	if self.vision_component:
+		self.vision_component.update_direction(new)
+		
+func _on_player_spotted() -> void:
+	if self.attack_component && self.attack_component.ranged_weapon_component:
+		self.attack_component.ranged_weapon_component.draw_weapon()
+	
+func _on_player_lost() -> void:
+	if self.attack_component && self.attack_component.ranged_weapon_component:
+		self.attack_component.ranged_weapon_component.stow_weapon()
+	
+	

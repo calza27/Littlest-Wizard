@@ -40,7 +40,7 @@ func get_attack() -> Attack:
 	return self._attack
 		
 func set_attack(attack: Attack) -> void:
-	self._attack = attack
+	self._attack = attack 
 	
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation)

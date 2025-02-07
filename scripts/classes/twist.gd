@@ -15,7 +15,6 @@ func _init(damageModifier: float = 0, damageMultiplier: float = 1, knockbackModi
 	self.damage_multiplier = damageMultiplier
 	self.knockback_modifier = knockbackModifier
 	self.knockback_multiplier = knockbackMultiplier
-	
 
 static func get_name() -> String:
 	push_error("get_name func not implemented")

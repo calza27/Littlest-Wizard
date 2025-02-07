@@ -1,0 +1,50 @@
+class_name PlayerState
+extends State
+
+var _player: PlayerCharacter
+var _active_spell: String
+
+enum Type { NONE, IDLE_CALM, IDLE_PUFFED, MOVE, STUNNED, DODGE, SPRINT, ATTACK_BOLT, SPELL_CHARGE, SPELL_CAST }
+
+func enter(previousState: State) -> void:
+	super.enter(previousState)
+	self._player = Utils.get_player()
+
+func input(event: InputEvent) -> void:
+	pass
+	
+func get_type() -> Type:
+	return Type.NONE
+
+func _is_movement_event(event: InputEvent) -> bool:
+	if event.is_action("down"):
+		return true
+	if event.is_action("up"):
+		return true
+	if event.is_action("left"):
+		return true
+	if event.is_action("right"):
+		return true
+	return false
+	
+func _is_spell_event(event: InputEvent) -> bool:
+	if event.is_action("spell_1"):
+		return true
+	if event.is_action("spell_2"):
+		return true
+	if event.is_action("spell_3"):
+		return true
+	if event.is_action("spell_4"):
+		return true
+	return false
+
+func _transition_with_spell(event: InputEvent, type: Type) -> void:
+	if event.is_action("spell_1"):
+		self._active_spell = "spell_1"
+	if event.is_action("spell_2"):
+		self._active_spell = "spell_2"
+	if event.is_action("spell_3"):
+		self._active_spell = "spell_3"
+	if event.is_action("spell_4"):
+		self._active_spell = "spell_4"
+	self.transitioned.emit(self, type)

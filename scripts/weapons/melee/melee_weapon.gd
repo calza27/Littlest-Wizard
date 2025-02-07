@@ -5,23 +5,24 @@ signal player_in_melee
 signal player_out_melee
 
 @export var weapon_Attributes: MeleeAttributes
-var player: CharacterBody2D
+var _player: CharacterBody2D
 var _attack_profile: Attack
 @onready var pivot_point: Marker2D = %PivotPoint
 @onready var swing_point: Marker2D = %SwingPoint
 @onready var hitbox_collision_shape: CollisionShape2D = %HitboxShape
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite
+@onready var melee_range: Area2D = %MeleeRange
 
 func _ready() -> void:
-	self.player = Utils.get_player()
+	self._player = Utils.get_player()
 	self.visible = false
 	self.hitbox_collision_shape.disabled = true
 	if self.weapon_Attributes:
 		self._attack_profile = Attack.new(self.weapon_Attributes.damage, self.weapon_Attributes.damage_type)
 
 func _physics_process(_delta: float) -> void:
-	self.look_at(player.position)
+	self.look_at(_player.position)
 	var direction = Vector2.RIGHT.rotated(rotation)
 	if direction.x < 0:
 		self.sprite.flip_v = true
@@ -33,7 +34,7 @@ func set_weapon_Attributes(attr: MeleeAttributes) -> void:
 		
 func swing_weapon() -> void:
 	if self.weapon_Attributes.mode == Constants.MeleeMode.THRUST:
-		self.animation_player.play("thrust")
+		self.animation__player.play("thrust")
 		return
 		
 	var direction = Vector2.RIGHT.rotated(rotation)

@@ -1,5 +1,5 @@
 class_name EnemyWander
-extends State
+extends EnemyState
 
 @export var distance_limit: float = 0
 var _move_direction: Vector2
@@ -7,10 +7,11 @@ var _wander_time: float
 var _origin: Vector2
 var _waiting: bool = true
 
-func enter(mob: MobOrchestrator) -> void:
-	super.enter(mob)
+func enter(previousState: State) -> void:
+	super.enter(previousState)
 	self._origin = self.mob.global_position
-	self.mob.vision_component.player_spotted.connect(_transition_follow)
+	self.mob.vision_component.player_spotted.connect(_transition_player_spotted)
+	self.mob.mob_graphics_component.play_walk_animation()
 	_randomize_wander()
 	
 func update(delta: float) -> void:
@@ -23,6 +24,9 @@ func physics_update(delta: float) -> void:
 	if _within_limit(delta):
 		mob.movement_component.move(_move_direction, delta)
 
+func get_type() -> Type:
+	return Type.WANDER
+	
 func _within_limit(delta) -> bool:
 	if self.distance_limit > 0:
 		var distance: float =  self.mob.movement_component.speed * delta
@@ -41,5 +45,5 @@ func _randomize_wander() -> void:
 		self._move_direction = Vector2(0, 0)
 	self._waiting = !self._waiting
 
-func _transition_follow() -> void:
-	self.transitioned.emit(self, "EnemyFollow")
+func _transition_player_spotted() -> void:
+	self.transitioned.emit(self, Type.FOLLOW)

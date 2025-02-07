@@ -1,6 +1,9 @@
 class_name StatusComponent
 extends Node2D
 
+signal status_applied(status: Status)
+signal status_removed(status: Status)
+
 var active_status: Dictionary = {}
 
 func apply_status_condition(status: Status) -> void:
@@ -8,6 +11,7 @@ func apply_status_condition(status: Status) -> void:
 	if existing:
 		existing.timer.queue_free()
 	self.active_status[status.effect] = status
+	status_applied.emit(status)
 	if status.duration > 0:
 		add_child(status.timer)
 		status.timer.timeout.connect(status_condition_timeout.bind(status))
@@ -15,6 +19,7 @@ func apply_status_condition(status: Status) -> void:
 	
 func status_condition_timeout(status: Status) -> void:
 	self.active_status.erase(status.effect)
+	status_removed.emit(status)
 	status.timer.queue_free()
 
 func has_status_effect(statusEffect: Constants.StatusEffect) -> bool:

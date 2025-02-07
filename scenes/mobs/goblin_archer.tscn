@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bys2evsx2rsm0"]
+[gd_scene load_steps=33 format=3 uid="uid://bys2evsx2rsm0"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin_archer.gd" id="1_cp5nq"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_hv3v4"]
@@ -14,13 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="11_m8x48"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="13_fiqf8"]
 [ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="14_sxvh3"]
-[ext_resource type="Script" path="res://scripts/states/enemy_attack_ranged.gd" id="15_jaeo5"]
-[ext_resource type="Script" path="res://scripts/states/enemy_follow.gd" id="16_p3pgg"]
-[ext_resource type="Script" path="res://scripts/states/enemy_idle.gd" id="17_4f11q"]
-[ext_resource type="Script" path="res://scripts/states/enemy_retreat.gd" id="18_u5he4"]
-[ext_resource type="Script" path="res://scripts/states/enemy_return.gd" id="19_xcxl5"]
-[ext_resource type="Script" path="res://scripts/states/enemy_search.gd" id="20_wap4b"]
-[ext_resource type="Script" path="res://scripts/states/enemy_wander.gd" id="21_2mosl"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_attack_ranged.gd" id="15_jaeo5"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_follow.gd" id="16_p3pgg"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_idle.gd" id="17_4f11q"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_retreat.gd" id="18_u5he4"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_return.gd" id="19_xcxl5"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_search.gd" id="20_wap4b"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_wander.gd" id="21_2mosl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("4_14v8p")
@@ -79,9 +79,6 @@ radius = 21.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mjqkj"]
 radius = 33.0
 height = 90.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_wem7o"]
-radius = 1200.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ykfk"]
 radius = 41.0488
@@ -213,13 +210,13 @@ attributes = ExtResource("10_gw3wq")
 
 [node name="VisionComponent" parent="." instance=ExtResource("9_nno8g")]
 unique_name_in_owner = true
+position = Vector2(0, -26)
 collision_layer = 0
 collision_mask = 1
 vision_mode = 1
 
-[node name="VisionArea" type="CollisionShape2D" parent="VisionComponent"]
-shape = SubResource("CircleShape2D_wem7o")
-debug_color = Color(0.663129, 0.316447, 1, 0.42)
+[node name="VisionArea" type="CollisionPolygon2D" parent="VisionComponent"]
+polygon = PackedVector2Array(0, 0, 0, 1200, 311, 1159, 600, 1039, 850, 850, 1039, 600, 1159, 311, 1200, 0, 1159, -310, 1040, -600, 848, -849, 600, -1039, 311, -1159, 0, -1200, 0, 0)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("10_gdyq6")]
 unique_name_in_owner = true
@@ -269,6 +266,8 @@ script = ExtResource("19_xcxl5")
 
 [node name="EnemySearch" type="Node" parent="StateMachine"]
 script = ExtResource("20_wap4b")
+distance_threshold = 20
+timeout = 5
 
 [node name="EnemyWander" type="Node" parent="StateMachine"]
 script = ExtResource("21_2mosl")

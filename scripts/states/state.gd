@@ -1,13 +1,12 @@
 class_name State
 extends Node
 
-signal transitioned
-var player: PlayerCharacter
-var mob: MobOrchestrator
+signal transitioned(State, Type)
 
-func enter(m: MobOrchestrator) -> void:
-	self.mob = m
-	self.player = Utils.get_player()
+var _previous_state: State
+
+func enter(previousState: State) -> void:
+	self._previous_state = previousState
 	
 func exit() -> void:
 	pass

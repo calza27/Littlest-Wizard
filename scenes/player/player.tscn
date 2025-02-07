@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cav80y2kyudpj"]
+[gd_scene load_steps=24 format=3 uid="uid://cav80y2kyudpj"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_uiqgj"]
 [ext_resource type="PackedScene" uid="uid://bq58hhvoivofv" path="res://scenes/weapons/ranged/player_weapon.tscn" id="2_03gea"]
@@ -9,6 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://x8133w1ee3io" path="res://scenes/components/graphics_component.tscn" id="6_k3x3o"]
 [ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="6_mow3a"]
 [ext_resource type="PackedScene" uid="uid://bmyuojrtpiaav" path="res://scenes/components/status_component.tscn" id="8_5y1eh"]
+[ext_resource type="PackedScene" uid="uid://cgmfjgcbgb1w7" path="res://scenes/components/interaction_component.tscn" id="10_u07n0"]
+[ext_resource type="Script" path="res://scripts/states/player_state_machine.gd" id="11_p0cod"]
+[ext_resource type="Script" path="res://scripts/states/player/player_idle_calm.gd" id="12_q07ts"]
+[ext_resource type="Script" path="res://scripts/states/player/player_idle_puffed.gd" id="13_ddtuo"]
+[ext_resource type="Script" path="res://scripts/states/player/player_move.gd" id="14_e3x88"]
+[ext_resource type="Script" path="res://scripts/states/player/player_sprint.gd" id="15_pryas"]
+[ext_resource type="Script" path="res://scripts/states/player/player_attack_bolt.gd" id="16_rvbu3"]
+[ext_resource type="Script" path="res://scripts/states/player/player_dodge.gd" id="17_4bu66"]
+[ext_resource type="Script" path="res://scripts/states/player/player_stunned.gd" id="18_waon6"]
+[ext_resource type="Script" path="res://scripts/states/player/player_cast_spell.gd" id="19_kmcnc"]
+[ext_resource type="Script" path="res://scripts/states/player/player_charge_spell.gd" id="20_0qjo3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r8l86"]
 radius = 33.0
@@ -17,29 +28,29 @@ height = 98.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfa6g"]
 size = Vector2(64, 80)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_28l2b"]
+radius = 150.0
+
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 31
+collision_mask = 63
 motion_mode = 1
 script = ExtResource("1_uiqgj")
 
 [node name="ManaComponent" parent="." instance=ExtResource("2_n6yu5")]
 unique_name_in_owner = true
-visible = false
 max_mana = 100.0
 curr_mana = 100.0
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("4_t8wa6")]
 unique_name_in_owner = true
-visible = false
 max_health = 1000.0
 curr_health = 1000.0
 status_component = NodePath("../StatusComponent")
 
 [node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
 unique_name_in_owner = true
-visible = false
 status_component = NodePath("../StatusComponent")
-speed = 800.0
+speed = 500.0
 weight = 1.0
 
 [node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
@@ -52,21 +63,18 @@ scale = Vector2(2, 2)
 
 [node name="StatusComponent" parent="." instance=ExtResource("8_5y1eh")]
 unique_name_in_owner = true
-visible = false
 
 [node name="Weapon" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("2_03gea")]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -60)
 collision_layer = 0
 status_component = NodePath("../StatusComponent")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("6_mow3a")]
 unique_name_in_owner = true
-visible = false
 collision_layer = 1
 status_component = NodePath("../StatusComponent")
-dodge_chance = 0.1
+dodge_chance = 0.15
 
 [node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
 light_mask = 2
@@ -77,6 +85,54 @@ shape = SubResource("CapsuleShape2D_r8l86")
 unique_name_in_owner = true
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_mfa6g")
+
+[node name="InteractionComponent" parent="." instance=ExtResource("10_u07n0")]
+
+[node name="InteractionCollisionShape" type="CollisionShape2D" parent="InteractionComponent"]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_28l2b")
+debug_color = Color(0.526675, 0.572314, 5.77569e-07, 0.42)
+
+[node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+script = ExtResource("11_p0cod")
+initial_state = NodePath("PlayerIdleCalm")
+debug = true
+
+[node name="PlayerIdleCalm" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("12_q07ts")
+
+[node name="PlayerIdlePuffed" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("13_ddtuo")
+
+[node name="PlayerMove" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("14_e3x88")
+
+[node name="PlayerSprint" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("15_pryas")
+
+[node name="PlayerAttackBolt" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("16_rvbu3")
+cast_time = 0.5
+
+[node name="PlayerDodge" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("17_4bu66")
+
+[node name="PlayerStunned" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("18_waon6")
+
+[node name="PlayerCastSpell" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("19_kmcnc")
+
+[node name="PlayerChargeSpell" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("20_0qjo3")
+
+[node name="StateMachineLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -37.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 30.3333
 
 [connection signal="mana_changed" from="ManaComponent" to="." method="_on_mana_component_mana_changed"]
 [connection signal="max_mana_changed" from="ManaComponent" to="." method="_on_mana_component_max_mana_changed"]
