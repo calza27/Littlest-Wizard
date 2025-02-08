@@ -1,17 +1,17 @@
 class_name ParticleEffect
 extends AnimatedSprite2D
 
-enum Effect { NONE, FIRE, FROST }
-
-var effect: Effect
-var timeout: float
+var effect: Constants.ParticleEffectType
+var timeout: float:
+	set(val):
+		timeout = val
+		if timeout < 0:
+			timeout = 0
 	
-func set_timeout(duration: float) -> void:
-	self.timeout = duration
-	if self.timeout < 0:
-		self.timeout = 0
+func set_timeout(d: float) -> void:
+	self.timeout = d
 		
-func set_effect(particleEffect: ParticleEffect.Effect) -> void:
+func set_effect(particleEffect: Constants.ParticleEffectType) -> void:
 	self.effect = particleEffect
 	
 func attach_to(node: ParticleAttachmentComponent, shift: Vector2) -> void:

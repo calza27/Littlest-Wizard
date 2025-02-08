@@ -37,10 +37,6 @@ func _ready() -> void:
 		
 func _physics_process(delta: float) -> void:
 	if self.mob_graphics_component:
-		if self.status_component.has_status_effect(Constants.StatusEffect.STUN):
-			self.mob_graphics_component.play_stun_animation()
-			return
-			
 		if velocity.length() == 0:
 			self.mob_graphics_component.play_idle_animation()
 		else:
@@ -62,14 +58,14 @@ func _apply_attack(attack: Attack) -> void:
 		
 	if self.health_component:
 		self.health_component.take_damage(attack)
-		if attack.damage_over_time:
-			self.health_component.apply_damage_over_time(attack.damage_over_time)
-			if attack.damage_over_time.particle_effect && self.mob_graphics_component:
-				self.mob_graphics_component.attach_random(attack.damage_over_time.particle_effect)
-		if  attack.status_effect && self.status_component:
-			self.status_component.apply_status_condition(attack.status_effect)
-			if attack.status_effect.particle_effect && self.mob_graphics_component:
-				self.mob_graphics_component.attach_random(attack.status_effect.particle_effect)
+		if attack.get_damage_over_time():
+			self.health_component.apply_damage_over_time(attack.get_damage_over_time())
+			if attack.get_damage_over_time().get_particle_effect() && self.mob_graphics_component:
+				self.mob_graphics_component.attach_random(attack.get_damage_over_time().get_particle_effect())
+		if  attack.get_status_effect() && self.status_component:
+			self.status_component.apply_status_condition(attack.get_status_effect())
+			if attack.get_status_effect().get_particle_effect() && self.mob_graphics_component:
+				self.mob_graphics_component.attach_random(attack.get_status_effect().get_particle_effect())
 
 func _on_hitbox_component_attack_dodged(_attack: Attack) -> void:
 	if self.mob_graphics_component:

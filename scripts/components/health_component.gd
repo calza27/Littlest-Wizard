@@ -41,11 +41,11 @@ func take_damage(attack: Attack) -> void:
 			self.temp_health = 0
 	else:
 		self.curr_health -= damage
-	if self.curr_health <= 0:
-		self.get_parent().queue_free()
-		self.entity_death.emit()
 	self.damage_taken.emit(attack)
 	self.health_changed.emit(self.curr_health)
+	if self.curr_health <= 0:
+		#self.get_parent().queue_free()
+		self.entity_death.emit()
 
 func apply_damage_over_time(damageOverTime: DamageOverTime) -> void:
 	if self._active_dot.find(damageOverTime.attack.damage_type) < 0:

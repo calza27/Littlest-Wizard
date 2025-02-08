@@ -24,6 +24,7 @@ func start(player: PlayerCharacter) -> void:
 	self._player = player
 	self._player.status_component.status_applied.connect(_stun_check)
 	self._player.hitbox_component.attack_dodged.connect(_transision_dodge)
+	self._player.health_component.entity_death.connect(_transision_death)
 
 func _process(delta) -> void:
 	if self.current_state:
@@ -57,9 +58,12 @@ func _update_label(text: String) -> void:
 	if self.label:
 		self.label.text = text
 
-func _stun_check(status: Status) -> void:
-	if status.effect == Constants.StatusEffect.STUN:
+func _stun_check(status: StatusEffect) -> void:
+	if status.effect == Constants.StatusEffectType.STUN:
 		transition(PlayerState.Type.STUNNED)
 		
 func _transision_dodge(_attack: Attack) -> void:
 	transition(PlayerState.Type.DODGE)
+	
+func _transision_death() -> void:
+	transition(PlayerState.Type.DEAD)

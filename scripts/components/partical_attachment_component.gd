@@ -27,7 +27,6 @@ func get_random_position() -> Vector2:
 			#assume rectangle for unknown, capsule, and everything in between
 			var size: Vector2 = self.collision_shape.shape.get_rect().size
 			return Vector2(self.rng.randf_range(-1*size.x/2, size.x/2), self.rng.randf_range(-1*size.y/2, size.y/2))
-			
 
 func _get_shape_type() -> ShapeType:
 	if self.collision_shape:

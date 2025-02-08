@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://kksh6kijgmep"]
+[gd_scene load_steps=43 format=3 uid="uid://kksh6kijgmep"]
 
 [ext_resource type="Script" path="res://scripts/mobs/slime.gd" id="1_4ypr0"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_6m07i"]
@@ -18,6 +18,9 @@
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_follow.gd" id="16_d8bae"]
 [ext_resource type="Script" path="res://scripts/states/enemy/slime/slime_follow.gd" id="18_lndai"]
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_attack_ranged.gd" id="19_b1y8q"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_dead.gd" id="19_x7a1o"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_stunned.gd" id="20_uktnl"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_frightened.gd" id="21_tel5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_suq1w"]
 atlas = ExtResource("4_vg5m0")
@@ -243,9 +246,10 @@ status_component = NodePath("../../StatusComponent")
 ranged_weapon_component = NodePath("RangedWeapon")
 cooldown = 3.0
 
-[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_2yg5v")]
+[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("8_2yg5v")]
 position = Vector2(0, -25)
 projectile_attributes = ExtResource("9_kl2ml")
+status_component = NodePath("../../../StatusComponent")
 
 [node name="Sprite" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/PivotPoint" index="0"]
 texture = null
@@ -253,13 +257,10 @@ texture = null
 [node name="ProjectilePoint" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/PivotPoint/Sprite" index="0"]
 position = Vector2(-9, 0)
 
-[node name="Projectile" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="2"]
-attributes = ExtResource("9_kl2ml")
-
 [node name="AttackRangeShape" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/AttackRange" index="0"]
 shape = SubResource("CircleShape2D_1cicw")
 
-[node name="CloseInRange" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="4"]
+[node name="CloseInRange" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="3"]
 monitoring = false
 
 [node name="CloseInRangeShape" parent="MobGraphicsComponent/AttackComponent/RangedWeapon/CloseInRange" index="0"]
@@ -309,6 +310,15 @@ script = ExtResource("19_b1y8q")
 
 [node name="SlimeFollow" type="Node" parent="StateMachine"]
 script = ExtResource("18_lndai")
+
+[node name="EnemyDead" type="Node" parent="StateMachine"]
+script = ExtResource("19_x7a1o")
+
+[node name="EnemyStunned" type="Node" parent="StateMachine"]
+script = ExtResource("20_uktnl")
+
+[node name="EnemyFrightened" type="Node" parent="StateMachine"]
+script = ExtResource("21_tel5m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../MobGraphicsComponent")

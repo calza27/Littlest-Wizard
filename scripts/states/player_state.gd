@@ -4,7 +4,7 @@ extends State
 var _player: PlayerCharacter
 var _active_spell: String
 
-enum Type { NONE, IDLE_CALM, IDLE_PUFFED, MOVE, STUNNED, DODGE, SPRINT, ATTACK_BOLT, SPELL_CHARGE, SPELL_CAST }
+enum Type { NONE, IDLE_CALM, IDLE_PUFFED, MOVE, STUNNED, DODGE, SPRINT, ATTACK_BOLT, SPELL_CHARGE, SPELL_CAST, DEAD }
 
 func enter(previousState: State) -> void:
 	super.enter(previousState)

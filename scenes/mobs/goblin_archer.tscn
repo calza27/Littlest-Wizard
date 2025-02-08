@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bys2evsx2rsm0"]
+[gd_scene load_steps=36 format=3 uid="uid://bys2evsx2rsm0"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin_archer.gd" id="1_cp5nq"]
 [ext_resource type="PackedScene" uid="uid://dsj0g047v3wbk" path="res://scenes/effects/ground_shadow.tscn" id="2_hv3v4"]
@@ -21,6 +21,9 @@
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_return.gd" id="19_xcxl5"]
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_search.gd" id="20_wap4b"]
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_wander.gd" id="21_2mosl"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_dead.gd" id="22_j3dn6"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_frightened.gd" id="23_bplpc"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_blind.gd" id="24_72m4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("4_14v8p")
@@ -201,12 +204,10 @@ status_component = NodePath("../../StatusComponent")
 ranged_weapon_component = NodePath("RangedWeapon")
 cooldown = 2.0
 
-[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("8_l082g")]
+[node name="RangedWeapon" parent="MobGraphicsComponent/AttackComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("8_l082g")]
 position = Vector2(0, -26)
 projectile_attributes = ExtResource("10_gw3wq")
-
-[node name="Projectile" parent="MobGraphicsComponent/AttackComponent/RangedWeapon" index="2"]
-attributes = ExtResource("10_gw3wq")
+status_component = NodePath("../../../StatusComponent")
 
 [node name="VisionComponent" parent="." instance=ExtResource("9_nno8g")]
 unique_name_in_owner = true
@@ -271,6 +272,15 @@ timeout = 5
 
 [node name="EnemyWander" type="Node" parent="StateMachine"]
 script = ExtResource("21_2mosl")
+
+[node name="EnemyDead" type="Node" parent="StateMachine"]
+script = ExtResource("22_j3dn6")
+
+[node name="EnemyFrightened" type="Node" parent="StateMachine"]
+script = ExtResource("23_bplpc")
+
+[node name="EnemyBlind" type="Node" parent="StateMachine"]
+script = ExtResource("24_72m4l")
 
 [connection signal="attack_dodged" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
 [connection signal="attacked" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attacked"]

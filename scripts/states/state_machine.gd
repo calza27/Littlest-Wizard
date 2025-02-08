@@ -23,9 +23,11 @@ func start() -> void:
 		self.initial_state.enter(self.initial_state)
 		self.current_state = self.initial_state
 	if self.mob.status_component:
-		self.mob.status_component.status_applied.connect(_stun_check)
+		self.mob.status_component.status_applied.connect(_status_check)
 	if self.mob.hitbox_component:
 		self.mob.hitbox_component.attack_dodged.connect(_transision_dodge)
+	if self.mob.health_component:
+		self.mob.health_component.entity_death.connect(_transision_death)
 
 func _process(delta) -> void:
 	if self.current_state:
@@ -56,9 +58,19 @@ func _update_label(text: String) -> void:
 	if self.label:
 		self.label.text = text
 		
-func _stun_check(status: Status) -> void:
-	if status.effect == Constants.StatusEffect.STUN:
+func _status_check(status: StatusEffect) -> void:
+	if status.effect == Constants.StatusEffectType.STUN:
 		transition(EnemyState.Type.STUNNED)
+		return
+	if status.effect == Constants.StatusEffectType.FRIGHTENED:
+		transition(EnemyState.Type.FRIGHTENED)
+		return
+	if status.effect == Constants.StatusEffectType.BLINDED:
+		transition(EnemyState.Type.BLIND)
+		return
 		
 func _transision_dodge(_attack: Attack) -> void:
 	transition(EnemyState.Type.DODGE)
+	
+func _transision_death() -> void:
+	transition(EnemyState.Type.DEAD)

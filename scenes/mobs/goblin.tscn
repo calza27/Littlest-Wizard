@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://qybhe87u5fgd"]
+[gd_scene load_steps=37 format=3 uid="uid://qybhe87u5fgd"]
 
 [ext_resource type="Script" path="res://scripts/mobs/goblin.gd" id="1_4hbfk"]
 [ext_resource type="Script" path="res://scripts/components/mob_graphics_component.gd" id="2_jae6w"]
@@ -22,6 +22,9 @@
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_wander.gd" id="20_8mwcw"]
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_stunned.gd" id="21_7ncmb"]
 [ext_resource type="Script" path="res://scripts/states/enemy/enemy_dodge.gd" id="22_axurf"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_dead.gd" id="23_mkawo"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_frightened.gd" id="24_ve5jf"]
+[ext_resource type="Script" path="res://scripts/states/enemy/enemy_blind.gd" id="25_dbkll"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juw5r"]
 atlas = ExtResource("3_8vflv")
@@ -202,10 +205,11 @@ status_component = NodePath("../../StatusComponent")
 melee_weapon_component = NodePath("MeleeWeapon")
 cooldown = 2.0
 
-[node name="MeleeWeapon" parent="MobGraphicsComponent/AttackComponent" instance=ExtResource("13_sfldp")]
+[node name="MeleeWeapon" parent="MobGraphicsComponent/AttackComponent" node_paths=PackedStringArray("status_component") instance=ExtResource("13_sfldp")]
 unique_name_in_owner = true
 position = Vector2(0, -26)
 weapon_Attributes = ExtResource("9_82p8p")
+status_component = NodePath("../../../StatusComponent")
 
 [node name="VisionComponent" parent="." instance=ExtResource("9_k2bm3")]
 unique_name_in_owner = true
@@ -274,6 +278,15 @@ script = ExtResource("21_7ncmb")
 
 [node name="EnemyDodge" type="Node" parent="StateMachine"]
 script = ExtResource("22_axurf")
+
+[node name="EnemyDead" type="Node" parent="StateMachine"]
+script = ExtResource("23_mkawo")
+
+[node name="EnemyFrightened" type="Node" parent="StateMachine"]
+script = ExtResource("24_ve5jf")
+
+[node name="EnemyBlind" type="Node" parent="StateMachine"]
+script = ExtResource("25_dbkll")
 
 [connection signal="attack_dodged" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
 [connection signal="attacked" from="MobGraphicsComponent/HitboxComponent" to="." method="_on_hitbox_component_attacked"]

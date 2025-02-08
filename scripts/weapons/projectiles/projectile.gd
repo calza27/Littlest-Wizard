@@ -34,7 +34,6 @@ func set_inert(i: bool) -> void:
 	
 func set_attributes(attr: ProjectileAttributes) -> void:
 	self.attributes = attr
-	self._attack = Attack.new(self.attributes.damage, self.attributes.damage_type)
 
 func get_attack() -> Attack:
 	return self._attack

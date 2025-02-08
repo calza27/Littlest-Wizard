@@ -13,6 +13,6 @@ func exit() -> void:
 func get_type() -> Type:
 	return Type.STUNNED
 
-func _transition_stun_finished(status: Status) -> void:
-	if status.effect == Constants.StatusEffect.STUN:
+func _transition_stun_finished(status: StatusEffect) -> void:
+	if status.effect == Constants.StatusEffectType.STUN:
 		self.transitioned.emit(self, self._previous_state.get_type())

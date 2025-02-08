@@ -4,7 +4,7 @@ extends State
 var player: PlayerCharacter
 var mob: MobOrchestrator
 
-enum Type { NONE, IDLE, WANDER, FOLLOW, SEARCH, RETREAT, RETURN, ATTACK_MELEE, ATTACK_RANGED, STUNNED, DODGE }
+enum Type { NONE, IDLE, WANDER, FOLLOW, SEARCH, RETREAT, RETURN, ATTACK_MELEE, ATTACK_RANGED, STUNNED, DODGE, FRIGHTENED, BLIND, DEAD }
 
 func enter(previousState: State) -> void:
 	super.enter(previousState)

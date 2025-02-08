@@ -17,11 +17,11 @@ func _ready() -> void:
 		
 func apply_attack(attack: Attack) -> void:
 	var dodged: bool = dodge()
-	self.attacked.emit(attack.duplicate(), dodged)
+	self.attacked.emit(attack, dodged)
 	if dodged:
-		self.attack_dodged.emit(attack.duplicate())
+		self.attack_dodged.emit(attack)
 	else:
-		self.hit_by_attack.emit(attack.duplicate())
+		self.hit_by_attack.emit(attack)
 		
 func dodge() -> bool:
 	var d = rng.randf_range(0, 1)

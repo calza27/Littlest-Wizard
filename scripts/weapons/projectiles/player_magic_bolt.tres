@@ -1,7 +1,14 @@
-[gd_resource type="Resource" script_class="ProjectileAttributes" load_steps=4 format=3 uid="uid://b10qslp0jmxp3"]
+[gd_resource type="Resource" script_class="ProjectileAttributes" load_steps=6 format=3 uid="uid://b10qslp0jmxp3"]
 
+[ext_resource type="Script" path="res://resources/attack.gd" id="1_2lx72"]
 [ext_resource type="Script" path="res://resources/projectile_attributes.gd" id="1_lukr2"]
 [ext_resource type="Texture2D" uid="uid://cicy7j3tucj6t" path="res://assets/weapons/ranged/projectiles/cantrip_w_particle.png" id="2_dy8tu"]
+
+[sub_resource type="Resource" id="Resource_fhl5v"]
+script = ExtResource("1_2lx72")
+damage = 50.0
+damage_type = 0
+knockback_force = 150.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nu0re"]
 radius = 19.0
@@ -13,8 +20,7 @@ texture = ExtResource("2_dy8tu")
 transform = Transform2D(1, 0, 0, 1, 0, 0)
 hitbox_shape = SubResource("CapsuleShape2D_nu0re")
 hitbox_pos = Vector2(0, 0)
-damage = 20.0
-damage_type = 0
+attack = SubResource("Resource_fhl5v")
 speed = 1000.0
 max_distance = 1500.0
 free_on_hit = true
