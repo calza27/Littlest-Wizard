@@ -10,7 +10,6 @@ extends EnemyState
 func enter(previousState: State) -> void:
 	super.enter(previousState)
 	self.mob.vision_component.player_spotted.connect(_transition_player_spotted)
-	self.mob.mob_graphics_component.play_walk_animation()
 	
 func physics_update(delta: float) -> void:
 	var curr_pos = self.mob.global_position

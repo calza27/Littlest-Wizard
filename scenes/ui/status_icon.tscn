@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://0uikh2qw81gj"]
+
+[ext_resource type="Script" path="res://scripts/ui/status_icon.gd" id="1_b0pfi"]
+[ext_resource type="Texture2D" uid="uid://cugt7123t7bkn" path="res://assets/effects/BlackCircle.png" id="2_pmh87"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaoxb"]
+bg_color = Color(0, 1, 1, 0.294118)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_yi7j8"]
+font_size = 8
+
+[node name="StatusIcon" type="Control"]
+custom_minimum_size = Vector2(75, 80)
+layout_mode = 3
+anchor_right = 0.039
+anchor_bottom = 0.074
+offset_right = 0.119995
+offset_bottom = 0.0800018
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b0pfi")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.987
+anchor_bottom = 1.0
+offset_right = -105.98
+offset_bottom = -114.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="PanelContainer" parent="Margin"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gaoxb")
+
+[node name="VBox" type="VBoxContainer" parent="Margin/Panel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Margin/Panel/VBox"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="sprite" type="Sprite2D" parent="Margin/Panel/VBox/Control"]
+unique_name_in_owner = true
+centered = false
+
+[node name="label" type="Label" parent="Margin/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_yi7j8")
+horizontal_alignment = 1
+
+[node name="CooldownFilter" type="TextureProgressBar" parent="Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+fill_mode = 5
+texture_under = ExtResource("2_pmh87")
+texture_progress = ExtResource("2_pmh87")
+tint_under = Color(1, 1, 1, 0)
+tint_progress = Color(0.6, 0.6, 0.6, 0.498039)

@@ -4,7 +4,7 @@ extends Node
 @export var initial_state: PlayerState
 @export var debug: bool = false
 var current_state: PlayerState
-var states: Dictionary = {}
+var states: Dictionary = {} #map[state.get_type]State
 var _player: PlayerCharacter
 @onready var label: Label = %StateMachineLabel
 

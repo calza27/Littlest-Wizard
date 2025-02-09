@@ -12,12 +12,23 @@ func _init() -> void:
 	
 func set_spell_active(binding: String, spellName: String) -> void:
 	self._active_spells[binding] = spellName
+	EventBus.bound_spell_changed.emit(binding, get_spell(spellName))
 	
 func get_active_spell(binding: String) -> Spell:
-	var spell_name: String = self._active_spells.get(binding, null)
+	var spell_name: String = self._active_spells.get(binding, "")
 	if !spell_name:
 		return null
 	return self._spells.get(spell_name, null)
+	
+func get_binding_for_spell(spell: Spell) -> String:
+	for key in self._active_spells:
+		if (self._active_spells[key] as String) == spell.get_spell_name():
+			return key
+	return ""
+	
+func clear_bound_spell(binding: String) -> void:
+	self._active_spells.erase(binding)
+	EventBus.bound_spell_changed.emit(binding, null)
 	
 func set_twist_active(twistName: String, active: bool) -> void:
 	self._active_twists[twistName] = active

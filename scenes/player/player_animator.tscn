@@ -781,13 +781,15 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_suagg")
 animation = &"cast"
 
-[node name="particle_area_head" parent="CharacterColorizer/PlayerSprite" instance=ExtResource("4_exvoq")]
+[node name="particle_area_head" parent="CharacterColorizer/PlayerSprite" node_paths=PackedStringArray("collision_shape") instance=ExtResource("4_exvoq")]
+collision_shape = NodePath("HeadShape")
 
 [node name="HeadShape" type="CollisionShape2D" parent="CharacterColorizer/PlayerSprite/particle_area_head"]
 position = Vector2(0, 2.5)
 shape = SubResource("CircleShape2D_dd4is")
 
-[node name="particle_area_body" parent="CharacterColorizer/PlayerSprite" instance=ExtResource("4_exvoq")]
+[node name="particle_area_body" parent="CharacterColorizer/PlayerSprite" node_paths=PackedStringArray("collision_shape") instance=ExtResource("4_exvoq")]
+collision_shape = NodePath("BodyShape")
 
 [node name="BodyShape" type="CollisionShape2D" parent="CharacterColorizer/PlayerSprite/particle_area_body"]
 position = Vector2(0, 10)

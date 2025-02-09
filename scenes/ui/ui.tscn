@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://cr0ewxm88421o"]
+[gd_scene load_steps=26 format=3 uid="uid://cr0ewxm88421o"]
 
 [ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_qtxou"]
 [ext_resource type="Texture2D" uid="uid://dd5j727no5yk1" path="res://assets/items/coin.png" id="2_jxb56"]
 [ext_resource type="LabelSettings" uid="uid://ct3rrmjel6kri" path="res://resources/money_label_settings.tres" id="3_r0xlf"]
+[ext_resource type="PackedScene" uid="uid://0uikh2qw81gj" path="res://scenes/ui/status_icon.tscn" id="4_c8523"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl30t"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -94,6 +95,12 @@ bg_color = Color(0, 1, 0, 1)
 font_size = 24
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hjg4x"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jiqru"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="Theme" id="Theme_33g2a"]
 
@@ -244,14 +251,74 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_wl30t")
 
+[node name="SpellsPanel" type="PanelContainer" parent="LowerHalfPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.306
+anchor_top = 0.737
+anchor_right = 0.806
+anchor_bottom = 0.911
+offset_left = -0.52002
+offset_top = 0.019989
+offset_right = -0.520142
+offset_bottom = 0.059967
+theme_override_styles/panel = SubResource("StyleBoxFlat_hjg4x")
+
+[node name="SpellMargin" type="MarginContainer" parent="LowerHalfPanel/SpellsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="LowerHalfPanel/SpellsPanel/SpellMargin"]
+layout_mode = 2
+alignment = 1
+
+[node name="binding_spell_1" parent="LowerHalfPanel/SpellsPanel/SpellMargin/HBox" instance=ExtResource("4_c8523")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="binding_spell_2" parent="LowerHalfPanel/SpellsPanel/SpellMargin/HBox" instance=ExtResource("4_c8523")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="binding_spell_3" parent="LowerHalfPanel/SpellsPanel/SpellMargin/HBox" instance=ExtResource("4_c8523")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="binding_spell_4" parent="LowerHalfPanel/SpellsPanel/SpellMargin/HBox" instance=ExtResource("4_c8523")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="StatusEffectPanel" type="PanelContainer" parent="LowerHalfPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.67
+anchor_top = 0.822
+anchor_right = 0.956
+anchor_bottom = 0.978
+offset_left = -0.400024
+offset_top = 0.119995
+offset_right = 0.47998
+offset_bottom = -0.119995
+theme_override_styles/panel = SubResource("StyleBoxFlat_jiqru")
+
+[node name="StatusEffectContainer" type="HBoxContainer" parent="LowerHalfPanel/StatusEffectPanel"]
+unique_name_in_owner = true
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
 [node name="StatBarPanel" type="PanelContainer" parent="LowerHalfPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.98
+anchor_left = 0.959
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.6001
+offset_left = -0.280151
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_2ewgg")

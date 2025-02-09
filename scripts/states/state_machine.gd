@@ -5,7 +5,7 @@ extends Node
 @export var mob: MobOrchestrator
 @export var debug: bool = false
 var current_state: EnemyState
-var states: Dictionary = {}
+var states: Dictionary = {} #map[state.get_type]State
 @onready var label: Label = %StateMachineLabel
 
 func _ready() -> void:

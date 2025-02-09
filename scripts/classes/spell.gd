@@ -3,6 +3,7 @@ extends Node2D
 
 signal cast_end
 
+@export var sprite: ImageTexture
 var spell_name: String
 var level: int
 var mana_cost: int

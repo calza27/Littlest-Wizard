@@ -11,7 +11,6 @@ func enter(previousState: State) -> void:
 	super.enter(previousState)
 	self._origin = self.mob.global_position
 	self.mob.vision_component.player_spotted.connect(_transition_player_spotted)
-	self.mob.mob_graphics_component.play_walk_animation()
 	_randomize_wander()
 	
 func update(delta: float) -> void:

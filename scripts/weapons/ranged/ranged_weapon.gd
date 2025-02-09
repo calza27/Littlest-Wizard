@@ -7,8 +7,8 @@ signal player_not_close
 signal player_too_close
 
 @export var projectile_attributes: ProjectileAttributes
+@export var status_component: StatusComponent
 var _player: CharacterBody2D
-@onready var projectile: Projectile = %Projectile
 @onready var pivot_point: Marker2D = %PivotPoint
 @onready var sprite: Sprite2D = %Sprite
 @onready var projectile_point: Marker2D = %ProjectilePoint
@@ -33,9 +33,14 @@ func stow_weapon() -> void:
 	self.visible = false
 
 func fire_weapon() -> void:
-	var new_projectile: Projectile = self.projectile.duplicate()
+	const PROJECTILE: Resource = preload(Files.PROJECTILES["projectile"])
+	var new_projectile: Projectile = PROJECTILE.instantiate()
 	new_projectile.set_inert(false)
 	new_projectile.set_attributes(self.projectile_attributes)
+	var attack: Attack = self.projectile_attributes.attack
+	if self.status_component:
+		attack = status_component.apply_attack_status_effects(attack)
+	new_projectile.set_attack(attack)
 	new_projectile.global_position = self.projectile_point.global_position
 	new_projectile.global_rotation = self.projectile_point.global_rotation
 	get_tree().get_first_node_in_group(Utils.group_name_for_group(Constants.Group.PROJECTILE)).add_child(new_projectile)

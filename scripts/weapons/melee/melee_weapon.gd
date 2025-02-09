@@ -5,6 +5,7 @@ signal player_in_melee
 signal player_out_melee
 
 @export var weapon_Attributes: MeleeAttributes
+@export var status_component: StatusComponent
 var _player: CharacterBody2D
 var _attack_profile: Attack
 @onready var pivot_point: Marker2D = %PivotPoint
@@ -19,7 +20,7 @@ func _ready() -> void:
 	self.visible = false
 	self.hitbox_collision_shape.disabled = true
 	if self.weapon_Attributes:
-		self._attack_profile = Attack.new(self.weapon_Attributes.damage, self.weapon_Attributes.damage_type)
+		self._attack_profile = self.weapon_Attributes.attack
 
 func _physics_process(_delta: float) -> void:
 	self.look_at(_player.position)
@@ -46,7 +47,10 @@ func swing_weapon() -> void:
 func _on_hitbox_area_area_entered(area: Area2D) -> void:
 	if area is HitboxComponent:
 		var hitbox: HitboxComponent = area as HitboxComponent
-		hitbox.apply_attack(self._attack_profile)
+		var attack: Attack = self._attack_profile
+		if self.status_component:
+			attack = self.status_component.apply_attack_status_effects(attack)
+		hitbox.apply_attack(attack)
 		
 func _on_melee_range_area_entered(area: Area2D) -> void:
 	player_in_melee.emit()

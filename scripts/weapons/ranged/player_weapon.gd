@@ -2,7 +2,6 @@ class_name PlayerWeapon
 extends RangedWeapon
 
 @export var magic_bolt_knockback_force: float = 400
-@export var status_component: StatusComponent
 var _weapon_enabled: bool
 
 func _ready() -> void:
@@ -25,11 +24,12 @@ func set_weapon_enabled(b: bool) -> void:
 	self._weapon_enabled = b
 
 func fire_weapon() -> void:
-	var new_projectile: Projectile = self.projectile.duplicate()
+	const PROJECTILE: Resource = preload(Files.PROJECTILES["projectile"])
+	var new_projectile: Projectile = PROJECTILE.instantiate()
 	new_projectile.set_inert(false)
 	new_projectile.set_attributes(self.projectile_attributes)
-	var attack: Attack = new_projectile.get_attack()
-	attack.knockback_force = self.magic_bolt_knockback_force
+	var attack: Attack = self.projectile_attributes.attack
+	#attack.knockback_force = self.magic_bolt_knockback_force
 	attack = GameState.player_spell_book.apply_twists(attack)
 	new_projectile.set_attack(attack)
 	new_projectile.set_collision_mask_value(2, true)

@@ -4,7 +4,6 @@ extends EnemyState
 func enter(previousState: State) -> void:
 	super.enter(previousState)
 	self.mob.attack_component.ranged_weapon_component.player_not_close.connect(_transition_player_not_close)
-	self.mob.mob_graphics_component.play_walk_animation()
 	
 func physics_update(delta: float) -> void:
 	var direction_away_from_player: Vector2 = self.player.global_position.direction_to(self.mob.global_position).normalized()

@@ -1,5 +1,8 @@
 extends Node
 
+func get_node_for_group(group: Constants.Group) -> Node:
+	return get_tree().get_first_node_in_group(group_name_for_group(group))
+	
 func get_player() -> PlayerCharacter:
 	return get_tree().get_first_node_in_group(group_name_for_group(Constants.Group.PLAYER))
 	
@@ -33,6 +36,8 @@ func group_name_for_group(group: Constants.Group) -> String:
 			return "camera"
 		Constants.Group.PROJECTILE:
 			return "projectile"
+		Constants.Group.SPELLS:
+			return "spell"
 	return ""
 	
 func vector_to_direction(vec: Vector2) -> Constants.Direction:

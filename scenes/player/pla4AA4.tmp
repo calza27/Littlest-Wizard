@@ -1,11 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://cav80y2kyudpj"]
+[gd_scene load_steps=25 format=3 uid="uid://cav80y2kyudpj"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_uiqgj"]
 [ext_resource type="PackedScene" uid="uid://bq58hhvoivofv" path="res://scenes/weapons/ranged/player_weapon.tscn" id="2_03gea"]
 [ext_resource type="PackedScene" uid="uid://bdaemx53nxxqk" path="res://scenes/player/player_animator.tscn" id="2_dy3ji"]
 [ext_resource type="PackedScene" uid="uid://vymgdx6smso4" path="res://scenes/components/mana_component.tscn" id="2_n6yu5"]
 [ext_resource type="PackedScene" uid="uid://cffd383wywp6j" path="res://scenes/components/health_component.tscn" id="4_t8wa6"]
-[ext_resource type="PackedScene" uid="uid://b0neq1wmja41d" path="res://scenes/components/spell_component.tscn" id="5_fadc4"]
 [ext_resource type="PackedScene" uid="uid://dil6cplf3w0rl" path="res://scenes/components/movement_component.tscn" id="5_hask7"]
 [ext_resource type="PackedScene" uid="uid://x8133w1ee3io" path="res://scenes/components/graphics_component.tscn" id="6_k3x3o"]
 [ext_resource type="PackedScene" uid="uid://dxjcup2q353pq" path="res://scenes/components/hitbox_component.tscn" id="6_mow3a"]
@@ -42,7 +41,6 @@ script = ExtResource("1_uiqgj")
 unique_name_in_owner = true
 max_mana = 100.0
 curr_mana = 100.0
-mana_regen = 20.0
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("4_t8wa6")]
 unique_name_in_owner = true
@@ -55,9 +53,6 @@ unique_name_in_owner = true
 status_component = NodePath("../StatusComponent")
 speed = 500.0
 weight = 1.0
-
-[node name="SpellComponent" parent="." instance=ExtResource("5_fadc4")]
-unique_name_in_owner = true
 
 [node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
 unique_name_in_owner = true
@@ -148,11 +143,6 @@ offset_bottom = 30.3333
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="max_health_changed" from="HealthComponent" to="." method="_on_health_component_max_health_changed"]
-[connection signal="direction_changed" from="MovementComponent" to="." method="_on_movement_component_direction_changed"]
-[connection signal="spell_cooldown_end" from="SpellComponent" to="." method="_on_spell_component_spell_cooldown_end"]
-[connection signal="spell_cooldown_start" from="SpellComponent" to="." method="_on_spell_component_spell_cooldown_start"]
-[connection signal="status_applied" from="StatusComponent" to="." method="_on_status_component_status_applied"]
-[connection signal="status_removed" from="StatusComponent" to="." method="_on_status_component_status_removed"]
 [connection signal="attack_dodged" from="HitboxComponent" to="." method="_on_hitbox_component_attack_dodged"]
 [connection signal="attacked" from="HitboxComponent" to="." method="_on_hitbox_component_attacked"]
 [connection signal="hit_by_attack" from="HitboxComponent" to="." method="_on_hitbox_component_hit_by_attack"]

@@ -20,7 +20,9 @@ func physics_update(_delta: float) -> void:
 		
 func input(event: InputEvent) -> void:
 	if event.is_action("shoot"):
-		if self._player.mana_component.can_spend_mana(self._spell.mana_cost):
+		if self._player.spell_component.spell_on_cooldown(self._spell):
+			self.transitioned.emit(self, Type.IDLE_PUFFED)
+		elif self._player.mana_component.can_spend_mana(self._spell.mana_cost):
 			_transition_with_spell(event, Type.SPELL_CAST)
 		else:
 			self.transitioned.emit(self, Type.IDLE_PUFFED)

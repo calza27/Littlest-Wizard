@@ -38,6 +38,7 @@ project/assembly_name="Littlest Wizard"
 player=""
 camera=""
 projectile=""
+spell=""
 
 [gui]
 

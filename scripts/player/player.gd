@@ -14,7 +14,6 @@ extends CharacterBody2D
 @onready var state_machine: PlayerStateMachine = %PlayerStateMachine
 func _ready() -> void:
 	set_test_spells_and_twists()
-	self.movement_component.direction_changed.connect(_update_direction)
 	self.state_machine.start(self)
 	
 func set_test_spells_and_twists() -> void:
@@ -33,9 +32,6 @@ func set_test_spells_and_twists() -> void:
 	GameState.player_spell_book.set_spell_active("spell_1", fireball.get_spell_name())
 	
 			
-func _update_direction(new: Constants.Direction) -> void:
-	self.player_animator.curr_facing = Utils.direction_to_facing(new)
-
 func _on_hitbox_component_hit_by_attack(attack: Attack) -> void:
 	self.movement_component.apply_knockback(attack)
 	self.health_component.take_damage(attack)
@@ -59,3 +55,18 @@ func _on_health_component_max_health_changed(newValue: float) -> void:
 
 func _on_mana_component_max_mana_changed(newValue: float) -> void:
 	EventBus.player_mana_change.emit(newValue, self.mana_component.curr_mana)
+
+func _on_spell_component_spell_cooldown_start(spell: Spell) -> void:
+	EventBus.player_spell_cooldown_start.emit(spell)
+
+func _on_spell_component_spell_cooldown_end(spell: Spell) -> void:
+	EventBus.player_spell_cooldown_end.emit(spell)
+
+func _on_movement_component_direction_changed(new: Constants.Direction) -> void:
+	self.player_animator.curr_facing = Utils.direction_to_facing(new)
+
+func _on_status_component_status_applied(status: StatusEffect) -> void:
+	EventBus.player_status_applied.emit(status)
+
+func _on_status_component_status_removed(status: StatusEffect) -> void:
+	EventBus.player_status_removed.emit(status)

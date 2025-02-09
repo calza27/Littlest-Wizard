@@ -6,6 +6,7 @@ signal max_mana_changed(newValue: float)
 
 @export var max_mana: float
 @export var curr_mana: float
+@export var mana_regen: float
 
 func _ready() -> void:
 	if self.max_mana < 0:
@@ -17,6 +18,10 @@ func _ready() -> void:
 	if self.curr_mana > self.max_mana:
 		self.curr_mana = self.max_mana
 
+func _process(delta: float) -> void:
+	if self.curr_mana < self.max_mana:
+		self.regain_mana(self.mana_regen * delta)
+	
 func can_spend_mana(amount: float) -> bool:
 	return self.curr_mana >= amount
 		

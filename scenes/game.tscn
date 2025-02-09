@@ -81,6 +81,8 @@ position = Vector2(3801, 2321)
 
 [node name="Projectiles" type="Node" parent="." groups=["projectile"]]
 
+[node name="Spells" type="Node" parent="." groups=["spell"]]
+
 [node name="UiCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UiCanvasLayer" instance=ExtResource("1_x20b3")]
