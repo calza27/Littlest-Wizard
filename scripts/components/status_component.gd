@@ -25,8 +25,8 @@ func _physics_process(delta: float) -> void:
 		if status && status.duration > 0:
 			status.time_remaining -= delta
 			if status.time_remaining <= 0:
-				self.status_removed.emit(status)
 				self.active_status.erase(key)
+				self.status_removed.emit(status)
 
 func has_status_effect(statusEffect: Constants.StatusEffectType) -> bool:
 	return self.active_status.has(statusEffect)

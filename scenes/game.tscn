@@ -16,13 +16,9 @@ y_sort_enabled = true
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.073
-offset_left = 8.0
-offset_top = -1.0
-offset_right = -13.0
-offset_bottom = 3.15991
+anchor_bottom = 1.0
 color = Color(0, 0.39, 0.039, 1)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_ttkmc")]

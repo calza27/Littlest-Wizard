@@ -10,7 +10,7 @@ var _curr_facing: Constants.Facing = Constants.Facing.RIGHT
 func _ready() -> void:
 	if self.sprite_2D:
 		self.sprite_2D.animation_finished.connect(_on_animation_finished)
-	
+					
 func set_facing_for_direction(dir: Constants.Direction) -> void:
 	self._curr_facing = Utils.direction_to_facing(dir)
 		

@@ -3,6 +3,9 @@ extends CharacterBody2D
 
 @export var ui_label: String
 @export var state_machine: StateMachine
+@export_group("Stats")
+@export var movement_speed: float = 300
+@export var dodge_chance: float = 0
 var origin_point: Vector2
 @onready var vision_component: VisionComponent = %VisionComponent
 @onready var movement_component: MovementComponent = %MovementComponent
@@ -21,16 +24,22 @@ func _ready() -> void:
 	if  self.hitbox_component:
 		self.hitbox_component.attacked.connect(_on_hitbox_component_attacked)
 		self.hitbox_component.attack_dodged.connect(_on_hitbox_component_attack_dodged)
+		self.hitbox_component.set_dodge_chance(self.dodge_chance)
 		
 	if self.mob_graphics_component:
 		self.mob_graphics_component.play_idle_animation()
 	
 	if self.movement_component:
 		self.movement_component.direction_changed.connect(_on_movement_direction_changed)
+		self.movement_component.set_speed(self.movement_speed)
 		
 	if self.vision_component:
 		self.vision_component.player_spotted.connect(_on_player_spotted)
 		self.vision_component.player_lost.connect(_on_player_lost)
+		
+	if self.status_component:
+		self.status_component.status_applied.connect(_update_status_effects)
+		self.status_component.status_removed.connect(_update_status_effects)
 		
 	if self.state_machine:
 		self.state_machine.start()
@@ -87,5 +96,16 @@ func _on_player_spotted() -> void:
 func _on_player_lost() -> void:
 	if self.attack_component && self.attack_component.ranged_weapon_component:
 		self.attack_component.ranged_weapon_component.stow_weapon()
-	
-	
+		
+func _update_status_effects(status: StatusEffect) -> void:
+	match status.effect:
+		Constants.StatusEffectType.SLOW, Constants.StatusEffectType.HASTE, Constants.StatusEffectType.RESTRAINED:
+			var speed: float = self.status_component.apply_movement_status_effects(self.movement_speed)
+			self.movement_component.set_speed(speed)
+		Constants.StatusEffectType.BUFF, Constants.StatusEffectType.ENFEEBLE:
+			pass
+		Constants.StatusEffectType.LETHARGY, Constants.StatusEffectType.VIGOR:
+			pass
+		Constants.StatusEffectType.NIMBLE, Constants.StatusEffectType.CUMBERSOME:
+			var dodge: float = self.status_component.apply_dodge_status_effects(self.dodge_chance)
+			self.hitbox_component.set_dodge_chance(dodge)

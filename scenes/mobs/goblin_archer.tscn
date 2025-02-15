@@ -150,6 +150,7 @@ motion_mode = 1
 script = ExtResource("1_cp5nq")
 ui_label = "Goblin Archer"
 state_machine = NodePath("StateMachine")
+movement_speed = 400.0
 
 [node name="GroundShadow" parent="." instance=ExtResource("2_hv3v4")]
 

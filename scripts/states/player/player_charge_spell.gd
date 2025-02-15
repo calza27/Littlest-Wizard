@@ -13,10 +13,9 @@ func enter(previousState: State) -> void:
 	self._player.player_animator.play_charge_spell_animation()
 
 func physics_update(_delta: float) -> void:
-	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var direction: Constants.Direction = Utils.vector_to_direction(mouse_pos)
-	var facing: Constants.Facing = Utils.direction_to_facing(direction)
-	self._player.player_animator.curr_facing = facing
+	var mouse_pos: Vector2 = self._player.get_global_mouse_position()
+	var direction: Constants.Direction = Utils.vector_to_direction(mouse_pos - self._player.global_position)
+	self._player.set_direction(direction)
 		
 func input(event: InputEvent) -> void:
 	if event.is_action("shoot"):

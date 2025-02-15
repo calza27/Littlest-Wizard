@@ -1,10 +1,17 @@
 extends Node
 
+func add_node_to_group(node: Node, group: Constants.Group) -> bool:
+	var groupNode: Node = get_node_for_group(group)
+	if !groupNode:
+		return false
+	groupNode.add_child(node)
+	return true
+
 func get_node_for_group(group: Constants.Group) -> Node:
 	return get_tree().get_first_node_in_group(group_name_for_group(group))
 	
 func get_player() -> PlayerCharacter:
-	return get_tree().get_first_node_in_group(group_name_for_group(Constants.Group.PLAYER))
+	return get_node_for_group(Constants.Group.PLAYER) as PlayerCharacter
 	
 func get_player_shape() -> Rect2:
 	var player: PlayerCharacter = get_player()

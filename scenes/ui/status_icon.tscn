@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://0uikh2qw81gj"]
+[gd_scene load_steps=6 format=3 uid="uid://0uikh2qw81gj"]
 
 [ext_resource type="Script" path="res://scripts/ui/status_icon.gd" id="1_b0pfi"]
 [ext_resource type="Texture2D" uid="uid://cugt7123t7bkn" path="res://assets/effects/BlackCircle.png" id="2_pmh87"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c2sqd"]
+font_size = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaoxb"]
 bg_color = Color(0, 1, 1, 0.294118)
@@ -28,6 +31,24 @@ offset_bottom = 0.0800018
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b0pfi")
+
+[node name="Numeric" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -28.0
+offset_right = 38.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.404191, 0.190617)
+text = "1"
+label_settings = SubResource("LabelSettings_c2sqd")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -56,9 +77,23 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="sprite" type="Sprite2D" parent="Margin/Panel/VBox/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="Margin/Panel/VBox/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="Margin/Panel/VBox/Control/MarginContainer"]
 unique_name_in_owner = true
-centered = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
 
 [node name="label" type="Label" parent="Margin/Panel/VBox"]
 unique_name_in_owner = true

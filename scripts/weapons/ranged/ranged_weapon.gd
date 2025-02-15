@@ -39,11 +39,11 @@ func fire_weapon() -> void:
 	new_projectile.set_attributes(self.projectile_attributes)
 	var attack: Attack = self.projectile_attributes.attack
 	if self.status_component:
-		attack = status_component.apply_attack_status_effects(attack)
+		attack = self.status_component.apply_attack_status_effects(attack)
 	new_projectile.set_attack(attack)
 	new_projectile.global_position = self.projectile_point.global_position
 	new_projectile.global_rotation = self.projectile_point.global_rotation
-	get_tree().get_first_node_in_group(Utils.group_name_for_group(Constants.Group.PROJECTILE)).add_child(new_projectile)
+	Utils.add_node_to_group(new_projectile, Constants.Group.PROJECTILE)
 
 func _on_attack_range_area_entered(area: Area2D) -> void:
 	draw_weapon()

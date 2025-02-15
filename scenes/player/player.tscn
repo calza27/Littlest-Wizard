@@ -37,6 +37,7 @@ radius = 150.0
 collision_mask = 63
 motion_mode = 1
 script = ExtResource("1_uiqgj")
+dodge_chance = 0.1
 
 [node name="ManaComponent" parent="." instance=ExtResource("2_n6yu5")]
 unique_name_in_owner = true
@@ -50,14 +51,13 @@ max_health = 1000.0
 curr_health = 1000.0
 status_component = NodePath("../StatusComponent")
 
-[node name="MovementComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_hask7")]
+[node name="MovementComponent" parent="." instance=ExtResource("5_hask7")]
 unique_name_in_owner = true
-status_component = NodePath("../StatusComponent")
-speed = 500.0
 weight = 1.0
 
-[node name="SpellComponent" parent="." instance=ExtResource("5_fadc4")]
+[node name="SpellComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("5_fadc4")]
 unique_name_in_owner = true
+status_component = NodePath("../StatusComponent")
 
 [node name="GraphicsComponent" parent="." instance=ExtResource("6_k3x3o")]
 unique_name_in_owner = true
@@ -76,11 +76,9 @@ position = Vector2(0, -60)
 collision_layer = 0
 status_component = NodePath("../StatusComponent")
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("status_component") instance=ExtResource("6_mow3a")]
+[node name="HitboxComponent" parent="." instance=ExtResource("6_mow3a")]
 unique_name_in_owner = true
 collision_layer = 1
-status_component = NodePath("../StatusComponent")
-dodge_chance = 0.15
 
 [node name="HitboxShape" type="CollisionShape2D" parent="HitboxComponent"]
 light_mask = 2

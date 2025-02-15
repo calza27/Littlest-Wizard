@@ -6,12 +6,11 @@ var _time_remaining: float
 
 func enter(previousState: State) -> void:
 	super.enter(previousState)
+	var mouse_pos: Vector2 = self._player.get_global_mouse_position()
+	var direction: Constants.Direction = Utils.vector_to_direction(mouse_pos - self._player.global_position)
+	self._player.set_direction(direction)
 	self._player.player_animator.play_idle_animation(false)
 	self._player.weapon.fire_weapon()
-	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var direction: Constants.Direction = Utils.vector_to_direction(mouse_pos)
-	var facing: Constants.Facing = Utils.direction_to_facing(direction)
-	self._player.player_animator.curr_facing = facing
 	self._time_remaining = self.cast_time
 	
 func update(delta: float) -> void:

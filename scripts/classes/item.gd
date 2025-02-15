@@ -15,7 +15,7 @@ var quantity: int:
 		quantity = val
 var single_use: bool = false
 var _player: PlayerCharacter
-const _SPEED: int = 300
+const _SPEED: int = 600
 
 func _init() -> void:
 	self.set_collision_layer_value(1, false)

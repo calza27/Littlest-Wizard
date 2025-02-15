@@ -2,7 +2,7 @@ class_name GraphicsComponent
 extends Node2D
 
 var rng = RandomNumberGenerator.new()
-	
+
 func attach_particle(part: String, particleEffect: ParticleEffect) -> void:
 	var points = _get_particle_attachment_points()
 	if points.size == 0:

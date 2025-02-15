@@ -10,7 +10,26 @@ var curr_facing: Constants.Facing = Constants.Facing.RIGHT
 func _ready() -> void:
 	if self.player_sprite:
 		self.player_sprite.animation_finished.connect(_on_animation_finished)
-		
+
+func _physics_process(delta: float) -> void:
+	if self.get_parent():
+		if self.get_parent() is CharacterBody2D:
+			var cb: CharacterBody2D = self.get_parent() as CharacterBody2D
+			if cb.velocity.length() > 0:
+				var direction: Constants.Direction = Utils.vector_to_direction(cb.velocity)
+				self.set_facing(Utils.direction_to_facing(direction))
+
+func set_facing(new_facing: Constants.Facing) -> void:
+	var old_facing: Constants.Facing = curr_facing
+	self.curr_facing = new_facing
+	if old_facing != new_facing:
+		var curr_animation: String = self.player_sprite.animation
+		var curr_frame: int = self.player_sprite.frame
+		var frame_progress: float = self.player_sprite.frame_progress
+		var arr: Array = curr_animation.split("-")
+		self.player_sprite.play(str(arr[0], "-", Constants.Facing.find_key(curr_facing)))
+		self.player_sprite.set_frame_and_progress(curr_frame, frame_progress)
+			
 func play_idle_animation(calm: bool) -> void:
 	var speed: float = 1
 	if !calm:

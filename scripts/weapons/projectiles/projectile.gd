@@ -23,7 +23,7 @@ func _ready() -> void:
 		self.hitbox_collision_shape.shape = self.attributes.hitbox_shape
 		self.hitbox_collision_shape.position = self.attributes.hitbox_pos
 	if self.movement_component:
-		self.movement_component.speed = self.attributes.speed
+		self.movement_component.set_speed(self.attributes.speed)
 		self.movement_component.max_distance = self.attributes.max_distance
 
 func set_inert(i: bool) -> void:

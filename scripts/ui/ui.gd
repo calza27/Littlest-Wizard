@@ -1,8 +1,6 @@
 extends Control
 
 var _status_indicators: Dictionary = {} #map[status.type]StatusIcon
-@onready var health_bar: ProgressBar = %HealthBar
-@onready var mana_bar: ProgressBar = %ManaBar
 @onready var enemy_health_bar: ProgressBar = %EnemyHealthBar
 @onready var enemy_health_label: Label = %EnemyLabel
 @onready var money_label: Label = %MoneyLabel
@@ -12,8 +10,6 @@ var _status_indicators: Dictionary = {} #map[status.type]StatusIcon
 @onready var binding_spell_4: StatusIcon = %binding_spell_4
 @onready var status_effect_container: Container = %StatusEffectContainer
 func _ready() -> void:
-	EventBus.player_health_change.connect(update_health_bar)
-	EventBus.player_mana_change.connect(update_mana_bar)
 	EventBus.player_money_change.connect(update_money_counter)
 	EventBus.focus_enemy.connect(focus_enemy)
 	EventBus.bound_spell_changed.connect(on_bound_spell_change)
@@ -27,14 +23,6 @@ func _ready() -> void:
 	self.on_bound_spell_change("spell_2", GameState.player_spell_book.get_active_spell("spell_2"))
 	self.on_bound_spell_change("spell_3", GameState.player_spell_book.get_active_spell("spell_3"))
 	self.on_bound_spell_change("spell_4", GameState.player_spell_book.get_active_spell("spell_4"))
-
-func update_health_bar(max_value:float, curr_value:float) -> void:
-	health_bar.max_value = max_value
-	health_bar.value = curr_value
-
-func update_mana_bar(max_value:float, curr_value:float) -> void:
-	mana_bar.max_value = max_value
-	mana_bar.value = curr_value
 
 func update_money_counter(_old_value: int, value: int) -> void:
 	money_label.text = str(value)
@@ -50,28 +38,34 @@ func focus_enemy(label: String, max_health: float, curr_health: float) -> void:
 
 func on_bound_spell_change(binding: String, spell: Spell) -> void:
 	var sb: StatusIcon
+	var num: int = 0
 	match binding:
 		"spell_1":
 			sb = binding_spell_1
+			num = 1
 		"spell_2":
 			sb = binding_spell_2
+			num = 2
 		"spell_3":
 			sb = binding_spell_3
+			num = 3
 		"spell_4":
 			sb = binding_spell_4
+			num = 4
+	sb.visible = true
+	sb.set_numeral(num)
 	if spell: 
 		sb.set_sprite_texture(spell.sprite)
 		sb.set_label(spell.get_spell_name())
-		sb.visible = true
-	else:
-		sb.set_sprite_texture(null)
-		sb.set_label("")
-		sb.visible = false
+	#else:
+		#sb.set_sprite_texture(null)
+		#sb.set_label("")
+		#sb.visible = false
 	
-func on_spell_cooldown_enter(spell: Spell) -> void:
+func on_spell_cooldown_enter(spell: Spell, cooldown: float) -> void:
 	var binding: StatusIcon = self._binding_component_for_spell(spell)
 	if binding:
-		binding.apply_cooldown(spell.cooldown)
+		binding.apply_cooldown(cooldown)
 	
 func on_spell_cooldown_exit(spell: Spell) -> void:
 	var binding: StatusIcon = self._binding_component_for_spell(spell)

@@ -19,8 +19,7 @@ func cast() -> bool:
 	var blast: FireyBlast = RESOURCE.instantiate()
 	blast.set_attack(self.attack)
 	blast.animation_finished.connect(_end_cast)
-	Utils.get_node_for_group(Constants.Group.SPELLS).add_child(blast)
-	return true
+	return Utils.add_node_to_group(blast, Constants.Group.SPELLS)
 	
 func get_spell_name() -> String:
 	return "Fiery Blast"

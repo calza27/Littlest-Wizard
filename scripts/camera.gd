@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	camera_tween.tween_property(self, "global_position", _get_position_for_camera(), self.lag)
 
 func _get_position_for_camera() -> Vector2:
-	var player: PlayerCharacter = get_tree().get_first_node_in_group(Utils.group_name_for_group(Constants.Group.PLAYER)) as PlayerCharacter
+	var player: PlayerCharacter = Utils.get_player()
 	var player_position: Vector2 = player.global_position
 	var mouse_position: Vector2 = get_global_mouse_position()
 	var max_bounds: Rect2 = Rect2(player_position.x - max_distance.x, player_position.y - max_distance.y, max_distance.x*2, max_distance.y*2)

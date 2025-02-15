@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://bm5fynuloflw8"]
+
+[ext_resource type="Script" path="res://scripts/ui/stat_bar.gd" id="1_iqppr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqq6r"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hf6fp"]
+bg_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2qis"]
+bg_color = Color(0, 0, 1, 1)
+
+[node name="StatBar" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1539.0
+offset_bottom = -1055.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sqq6r")
+script = ExtResource("1_iqppr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100 / 100"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Bar" type="ProgressBar" parent="HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_hf6fp")
+theme_override_styles/fill = SubResource("StyleBoxFlat_w2qis")
+max_value = 0.0
+step = 1.0
+show_percentage = false

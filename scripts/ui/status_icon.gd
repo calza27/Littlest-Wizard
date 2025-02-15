@@ -1,18 +1,26 @@
 class_name StatusIcon
 extends Control
 
-@onready var sprite: Sprite2D = %sprite
+@export var _numeral: int = 0
+@onready var sprite: TextureRect = %TextureRect
 @onready var label: Label = %label
 @onready var cooldown_filter: TextureProgressBar = %CooldownFilter
+@onready var numeric: Label = %Numeric
 
 func _ready() -> void:
 	self.cooldown_filter.visible = false
+	set_numeral(self._numeral)
 
 func _process(delta: float) -> void:
 	if self.cooldown_filter.value > 0:
 		self.cooldown_filter.value -= (delta * 1000)
 	if self.cooldown_filter.value <= 0:
 		self.cooldown_filter.visible = false
+
+func set_numeral(num: int) -> void:
+	self._numeral = num
+	self.numeric.text = str(self._numeral)
+	self.numeric.visible = true if self._numeral > 0 else false
 	
 func show_hide(show: bool) -> void:
 	self.sprite.visible = show
